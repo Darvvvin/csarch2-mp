@@ -7,6 +7,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import Outputs from './Outputs';
 
 export default function Inputs() {
     const [age, setAge] = React.useState('');
@@ -46,7 +47,7 @@ export default function Inputs() {
                     }} id="outlined-basic" type="number" label="Base-10" variant="outlined" />
             </Box>
             <Button variant="contained" sx={{ minWidth: '100%', fontSize: '0.75em' }}><b>Convert</b></Button>
-            
+            <Outputs />
         </Box>
     );
 }
