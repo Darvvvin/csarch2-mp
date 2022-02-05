@@ -9,16 +9,18 @@ import Paper from '@mui/material/Paper';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { IconButton  } from '@mui/material';
 
-function createData(name, calories) {
-    return { name, calories };
+function createData(type, result) {
+    return { type, result };
 }
 
-const rows = [
-    createData('Binary', 1010001110001),
-    createData('Hexadecimal', '0xFFFFFFF')
-];
+export default function Outputs(props) {
 
-export default function Outputs() {
+
+    const rows = [
+        createData('Binary', props.primary),
+        createData('Hexadecimal', props.base)
+    ];
+
     return (
         <TableContainer component={Paper} sx={{ mt: 1 }}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -31,14 +33,14 @@ export default function Outputs() {
                 <TableBody>
                     {rows.map((row) => (
                         <TableRow
-                            key={row.name}
+                            key={row.type}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             <TableCell component="th" scope="row">
-                                {row.name}
+                                {row.type}
                             </TableCell>
                             <TableCell align="right">
-                                {row.calories}
+                                {row.result}
                                 <IconButton>
                                     <ContentCopyIcon />
                                 </IconButton >

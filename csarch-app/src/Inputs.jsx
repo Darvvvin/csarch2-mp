@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Typography } from '@mui/material';
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -10,11 +10,29 @@ import Select from '@mui/material/Select';
 import Outputs from './Outputs';
 
 export default function Inputs() {
-    const [age, setAge] = React.useState('');
+    var [method, setMethod] = React.useState('');
+    var [primary, setPrimary] = React.useState('');
+    var [base, setBase] = React.useState('');
 
     const handleChange = (event) => {
-        setAge(event.target.value);
+        setMethod(event.target.value);
+        console.log('Value Changed!');
     };
+
+    const handlePrimary = (event) => {
+        setPrimary(event.target.value);
+        console.log('Primary Changed to ' + primary);
+    };
+
+    const handleBase = (event) => {
+        setBase(event.target.value);
+        console.log('Base Changed to ' + base);
+    };
+
+
+    // function handleConvert() {
+    //     console.log('Clicked!')
+    // }
 
     return (
         <Box
@@ -29,10 +47,10 @@ export default function Inputs() {
             <Box sx={{ display: 'flex', mb: 1 }}>
                 <FormControl required sx={{ minWidth: 150, mr: 1 }}>
                     <InputLabel id="demo-simple-select-label">Method</InputLabel>
-                    <Select 
+                    <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={age}
+                        value={method}
                         label="Method"
                         onChange={handleChange}
                     >
@@ -40,14 +58,26 @@ export default function Inputs() {
                         <MenuItem value={20}>NaN</MenuItem>
                     </Select>
                 </FormControl>
-                <TextField required sx={{ flexGrow: 5, mr: 1 }} id="outlined-basic" type="number" label="Decimal" variant="outlined" />
+                <TextField
+                    required
+                    sx={{ flexGrow: 5, mr: 1 }}
+                    id="outlined-basic"
+                    type="number"
+                    label="Decimal"
+                    variant="outlined"
+                    value={primary}
+                    onChange={handlePrimary}
+                />
                 <TextField required
                     onInput={(e) => {
                         e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 2)
-                    }} id="outlined-basic" type="number" label="Base-10" variant="outlined" />
+                    }} id="outlined-basic" type="number" label="Base-10" variant="outlined" 
+                    value={base}
+                    onChange={handleBase}
+                />
             </Box>
-            <Button variant="contained" sx={{ minWidth: '100%', fontSize: '0.75em' }}><b>Convert</b></Button>
-            <Outputs />
+            {/* <Button variant="contained" onClick={handleConvert} sx={{ minWidth: '100%', fontSize: '0.75em' }}><b>Convert</b></Button> */}
+            <Outputs primary={primary} base={base}/>
         </Box>
     );
 }
