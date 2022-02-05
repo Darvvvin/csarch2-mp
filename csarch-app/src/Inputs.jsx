@@ -10,7 +10,7 @@ import Select from '@mui/material/Select';
 import Outputs from './Outputs';
 
 export default function Inputs() {
-    var [method, setMethod] = React.useState('');
+    var [method, setMethod] = React.useState('None');
     var [primary, setPrimary] = React.useState('');
     var [base, setBase] = React.useState('');
 
@@ -44,18 +44,18 @@ export default function Inputs() {
             autoComplete="off"
         >
             <Typography variant='h2'><b>The Only <span className='specialColor'>Decimal-64</span> <br />Converter You'll Ever Need.</b></Typography>
-            <Box sx={{ display: 'flex', mb: 1 }}>
+            <Box sx={{ display: 'flex', mb: 2, mt: 2 }}>
                 <FormControl required sx={{ minWidth: 150, mr: 1 }}>
-                    <InputLabel id="demo-simple-select-label">Method</InputLabel>
+                    <InputLabel id="demo-simple-select-label">Type</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         value={method}
-                        label="Method"
+                        label="Type"
                         onChange={handleChange}
                     >
-                        <MenuItem value={10}>Round Off</MenuItem>
-                        <MenuItem value={20}>NaN</MenuItem>
+                        <MenuItem value={'None'}>None</MenuItem>
+                        <MenuItem value={'Round'}>Round-Off Method</MenuItem>
                     </Select>
                 </FormControl>
                 <TextField
