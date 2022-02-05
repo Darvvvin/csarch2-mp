@@ -46,6 +46,7 @@ export default function Inputs() {
                     }} id="outlined-basic" type="number" label="Base-10" variant="outlined" />
             </Box>
             <Button variant="contained" sx={{ minWidth: '100%', fontSize: '0.75em' }}><b>Convert</b></Button>
+            
         </Box>
     );
 }
