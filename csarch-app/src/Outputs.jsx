@@ -7,7 +7,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { IconButton  } from '@mui/material';
+import { IconButton, Typography  } from '@mui/material';
+import { Box } from '@mui/system';
 
 function createData(type, result) {
     return { type, result };
@@ -22,6 +23,8 @@ export default function Outputs(props) {
     ];
 
     return (
+        <Box>
+        <Typography variant='h4'><center><b>{props.primary}</b>x10<sup><b>{props.base}</b></sup></center></Typography>
         <TableContainer component={Paper} sx={{ mt: 1 }}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
@@ -50,5 +53,6 @@ export default function Outputs(props) {
                 </TableBody>
             </Table>
         </TableContainer>
+        </Box>
     );
 }
