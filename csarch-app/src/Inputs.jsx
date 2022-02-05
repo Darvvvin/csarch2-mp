@@ -26,9 +26,9 @@ export default function Inputs() {
         >
             <Typography variant='h2'><b>The Only <span className='specialColor'>Decimal-64</span> <br />Converter You'll Ever Need.</b></Typography>
             <Box sx={{ display: 'flex', mb: 1 }}>
-                <FormControl sx={{minWidth: 150, mr: 1}}>
+                <FormControl required sx={{ minWidth: 150, mr: 1 }}>
                     <InputLabel id="demo-simple-select-label">Method</InputLabel>
-                    <Select
+                    <Select 
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         value={age}
@@ -39,10 +39,13 @@ export default function Inputs() {
                         <MenuItem value={20}>NaN</MenuItem>
                     </Select>
                 </FormControl>
-                <TextField sx={{ flexGrow: 5, mr: 1 }} id="outlined-basic" type="number" label="Decimal" variant="outlined" />
-                <TextField id="outlined-basic" type="number" label="Base-10" variant="outlined" />
+                <TextField required sx={{ flexGrow: 5, mr: 1 }} id="outlined-basic" type="number" label="Decimal" variant="outlined" />
+                <TextField required
+                    onInput={(e) => {
+                        e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 2)
+                    }} id="outlined-basic" type="number" label="Base-10" variant="outlined" />
             </Box>
-            <Button variant="contained" sx={{ minWidth: '100%'}}>Convert</Button>
+            <Button variant="contained" sx={{ minWidth: '100%', fontSize: '0.75em' }}><b>Convert</b></Button>
         </Box>
     );
 }
