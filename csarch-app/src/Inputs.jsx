@@ -16,17 +16,17 @@ export default function Inputs() {
 
     const handleChange = (event) => {
         setMethod(event.target.value);
-        console.log('Value Changed!');
+        //console.log('Value Changed!');
     };
 
     const handlePrimary = (event) => {
         setPrimary(event.target.value);
-        console.log('Primary Changed to ' + primary);
+        //console.log('Primary Changed to ' + primary);
     };
 
     const handleBase = (event) => {
         setBase(event.target.value);
-        console.log('Base Changed to ' + base);
+        //console.log('Base Changed to ' + base);
     };
 
 

@@ -10,16 +10,23 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { IconButton, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 
-function createData(type, result) {
-    return { type, result };
-}
-
 export default function Outputs(props) {
-    
-    const rows = [
-        createData('Binary', props.primary),
-        createData('Hexadecimal', props.base)
-    ];
+
+    //let decimal = parseInt(props.primary)
+    //let base = parseInt(props.base)
+
+    function BinaryConversion(props) {
+        var a = [];
+        var n = props.base;
+        var i;
+
+        for (i = 0; n > 0; i++) {
+            a[i] = n % 2;
+            n = n / 2;
+            n = ~~n
+        }
+        return a
+    }
 
     return (
         <Box>
@@ -37,22 +44,37 @@ export default function Outputs(props) {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row) => (
-                            <TableRow
-                                key={row.type}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                            >
-                                <TableCell component="th" scope="row">
-                                    {row.type}
-                                </TableCell>
-                                <TableCell align="right">
-                                    {row.result}
+                        <TableRow
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                            <TableCell component="th" scope="row">
+                                Binary
+                            </TableCell>
+                            <TableCell align="right">
+                                <Typography variant="h5">
+                                    <BinaryConversion base={props.base} />
                                     <IconButton>
                                         <ContentCopyIcon />
                                     </IconButton >
-                                </TableCell>
-                            </TableRow>
-                        ))}
+                                </Typography>
+                            </TableCell>
+                        </TableRow>
+
+                        <TableRow
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                            <TableCell component="th" scope="row">
+                                Hexadecimal
+                            </TableCell>
+                            <TableCell align="right">
+                                <Typography variant="h5">
+                                    <BinaryConversion base={props.base} />
+                                    <IconButton>
+                                        <ContentCopyIcon />
+                                    </IconButton >
+                                </Typography>
+                            </TableCell>
+                        </TableRow>
                     </TableBody>
                 </Table>
             </TableContainer>
