@@ -67,8 +67,8 @@ export default function Outputs(props) {
         comboField.push(1);
         comboField.push(1);
         
-        comboField.push(eBar[2]); // c
-        comboField.push(eBar[3]); // d
+        comboField.push(eBar[0]); // c
+        comboField.push(eBar[1]); // d
         comboField.push(msdBinary[3]); // e
     }
     
