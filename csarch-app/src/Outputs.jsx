@@ -48,6 +48,9 @@ export default function Outputs(props) {
     var eBar = base + 398
     eBar = decToBinary(eBar);
 
+    //Sign
+    eBar.unshift(0) // 0 For now
+
     // 2) Get MSD in binary
     var msd = decimal.toString()[0];
     var msdBinary = decToBinary(msd);
@@ -57,7 +60,8 @@ export default function Outputs(props) {
 
     // ComboField   | Type      | Exps MSB  | Coef MSD
     // a b c d e    | Finite    | a b       | 0 c d e
-    if(0 <= parseInt(msd) && parseInt(msd) <= 7) {
+    if(parseInt(msd) <= 7) {
+        console.log("LESS THAN 7!")
         comboField.push(eBar[0]); // a
         comboField.push(eBar[1]); // b
 
@@ -67,7 +71,7 @@ export default function Outputs(props) {
 
     // ComboField   | Type      | Exps MSB  | Coef MSD
     // 1 1 c d e    | Finite    | c d       | 1 0 0 e
-    } else if (8 <= parseInt(msd) && parseInt(msd) <= 9) {
+    } else if (8 <= parseInt(msd)) {
         comboField.push(1);
         comboField.push(1);
         
