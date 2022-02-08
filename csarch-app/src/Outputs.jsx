@@ -35,6 +35,9 @@ export default function Outputs(props) {
         for (let j = i - 1; j >= 0; j--)
             reverseArray.push(binaryNum[j]);
 
+        while(reverseArray.length < 4)
+            reverseArray.unshift(0)
+
         return reverseArray;
     }
 
@@ -88,8 +91,6 @@ export default function Outputs(props) {
         var bN = 0;
         var cN = 0;
 
-        console.log("STARTINGSTARTINGSTARTINGSTARTINGSTARTING");
-
         for(let i = 1; i < 16; i++) {
             if(i % 3 === 0) {
                 //Perform Densley Packed Algo
@@ -110,13 +111,13 @@ export default function Outputs(props) {
                 while(cN.length < 4)
                     cN.unshift(0)
 
-                //Densley Packed Conversion
-                
-                
-                console.log("-----------------");
-                console.log('a: ' + aN)
-                console.log('b: ' + bN)
-                console.log('c: ' + cN)
+                //Densley Packed Conversion Here
+
+
+                // console.log("-----------------");
+                // console.log('a: ' + aN)
+                // console.log('b: ' + bN)
+                // console.log('c: ' + cN)
             }
         }
     }
