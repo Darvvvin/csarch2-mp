@@ -12,21 +12,34 @@ import { Box } from '@mui/system';
 
 export default function Outputs(props) {
 
-    //let decimal = parseInt(props.primary)
-    //let base = parseInt(props.base)
+    let decimal = parseInt(props.primary)
+    let base = parseInt(props.base)
 
-    function BinaryConversion(props) {
-        var a = [];
-        var n = props.base;
-        var i;
+    function decToBinary(n) {
+        // array to store binary number
+        let binaryNum = new Array(32);
+        let reverseArray = [];
 
-        for (i = 0; n > 0; i++) {
-            a[i] = n % 2;
-            n = n / 2;
-            n = ~~n
+        // counter for binary array
+        let i = 0;
+        while (n > 0) {
+
+            // storing remainder in binary array
+            binaryNum[i] = n % 2;
+            n = Math.floor(n / 2);
+            i++;
         }
-        return a
+
+        // printing binary array in reverse order
+        for (let j = i - 1; j >= 0; j--)
+            reverseArray.push(binaryNum[j]);
+
+        return reverseArray;
     }
+
+    // 1) Get e' in binary
+    var eBar = base + 398
+    eBar = decToBinary(eBar);
 
     return (
         <Box>
@@ -52,7 +65,7 @@ export default function Outputs(props) {
                             </TableCell>
                             <TableCell align="right">
                                 <Typography variant="h5">
-                                    <BinaryConversion base={props.base} />
+                                    {eBar}
                                     <IconButton>
                                         <ContentCopyIcon />
                                     </IconButton >
@@ -68,7 +81,7 @@ export default function Outputs(props) {
                             </TableCell>
                             <TableCell align="right">
                                 <Typography variant="h5">
-                                    <BinaryConversion base={props.base} />
+                                    {eBar}
                                     <IconButton>
                                         <ContentCopyIcon />
                                     </IconButton >
