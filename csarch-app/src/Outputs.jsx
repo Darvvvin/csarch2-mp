@@ -10,10 +10,26 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { IconButton, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+
 export default function Outputs(props) {
+    var [negativeDecimal, setNegDec] = React.useState(false);
+    var [negativeExponent, setNegExp] = React.useState(false);
 
     let decimal = parseInt(props.primary)
     let base = parseInt(props.base)
+
+    const handleNegativeDecimal = (event) => {
+        setNegDec(event.target.checked);
+    }
+
+    const handleNegativeExponent = (event) => {
+        setNegExp(event.target.checked);
+    }
+
+    console.log('Decimal is ' + negativeDecimal)
+    console.log('Exponent is ' + negativeExponent)
 
     function decToBinary(n) {
         // array to store binary number
@@ -35,7 +51,7 @@ export default function Outputs(props) {
         for (let j = i - 1; j >= 0; j--)
             reverseArray.push(binaryNum[j]);
 
-        while(reverseArray.length < 4)
+        while (reverseArray.length < 4)
             reverseArray.unshift(0)
 
         return reverseArray;
@@ -60,7 +76,7 @@ export default function Outputs(props) {
 
     // ComboField   | Type      | Exps MSB  | Coef MSD
     // a b c d e    | Finite    | a b       | 0 c d e
-    if(parseInt(msd) <= 7) {
+    if (parseInt(msd) <= 7) {
         //console.log("LESS THAN 7!")
         comboField.push(eBar[0]); // a
         comboField.push(eBar[1]); // b
@@ -69,12 +85,12 @@ export default function Outputs(props) {
         comboField.push(msdBinary[2]); // d
         comboField.push(msdBinary[3]); // e
 
-    // ComboField   | Type      | Exps MSB  | Coef MSD
-    // 1 1 c d e    | Finite    | c d       | 1 0 0 e
+        // ComboField   | Type      | Exps MSB  | Coef MSD
+        // 1 1 c d e    | Finite    | c d       | 1 0 0 e
     } else if (8 <= parseInt(msd)) {
         comboField.push(1);
         comboField.push(1);
-        
+
         comboField.push(eBar[0]); // c
         comboField.push(eBar[1]); // d
         comboField.push(msdBinary[3]); // e
@@ -84,37 +100,37 @@ export default function Outputs(props) {
     var expoCont = []
     var j = 0
 
-    for(let i = 2; i < 10; i++) {
+    for (let i = 2; i < 10; i++) {
         expoCont[j] = eBar[i]
         j++
     }
 
     // 5) Get Densley Packed of per 3 digits in decimal
-    function dpCoefCont (decimal) {
+    function dpCoefCont(decimal) {
         var aN = 0;
         var bN = 0;
         var cN = 0;
 
         var finalArr = []
 
-        for(let l = 1; l < 16; l++) {
-            if(l % 3 === 0) {
+        for (let l = 1; l < 16; l++) {
+            if (l % 3 === 0) {
                 //Perform Densley Packed Algo
-                aN = decimal.toString()[l-2]
-                bN = decimal.toString()[l-1]
+                aN = decimal.toString()[l - 2]
+                bN = decimal.toString()[l - 1]
                 cN = decimal.toString()[l]
 
                 aN = decToBinary(aN)
                 bN = decToBinary(bN)
                 cN = decToBinary(cN)
 
-                while(aN.length < 4)
+                while (aN.length < 4)
                     aN.unshift(0)
-                
-                while(bN.length < 4)
+
+                while (bN.length < 4)
                     bN.unshift(0)
-                
-                while(cN.length < 4)
+
+                while (cN.length < 4)
                     cN.unshift(0)
 
                 //Densley Packed Conversion Here
@@ -193,7 +209,7 @@ export default function Outputs(props) {
                     finalArr.push(1)
                     finalArr.push(m)
 
-                } else if(a === 1 && e === 0 && i === 0) {
+                } else if (a === 1 && e === 0 && i === 0) {
                     finalArr.push(j)
                     finalArr.push(k)
                     finalArr.push(d)
@@ -208,7 +224,7 @@ export default function Outputs(props) {
                     finalArr.push(0)
                     finalArr.push(m)
 
-                } else if(a === 1 && e === 0 && i === 1) {
+                } else if (a === 1 && e === 0 && i === 1) {
                     finalArr.push(f)
                     finalArr.push(g)
                     finalArr.push(d)
@@ -223,7 +239,7 @@ export default function Outputs(props) {
                     finalArr.push(1)
                     finalArr.push(m)
 
-                } else if(a === 1 && e === 1 && i === 0) {
+                } else if (a === 1 && e === 1 && i === 0) {
                     finalArr.push(j)
                     finalArr.push(k)
                     finalArr.push(d)
@@ -238,7 +254,7 @@ export default function Outputs(props) {
                     finalArr.push(1)
                     finalArr.push(m)
 
-                } else if(a === 1 && e === 1 && i === 1) {
+                } else if (a === 1 && e === 1 && i === 1) {
                     finalArr.push(0)
                     finalArr.push(0)
                     finalArr.push(d)
@@ -265,9 +281,12 @@ export default function Outputs(props) {
     }
 
     var coefCount = dpCoefCont(decimal);
-    
+
     return (
         <Box>
+            <FormControlLabel control={<Checkbox otherProps onChange={handleNegativeDecimal} />} label="Negative Decimal" />
+            <FormControlLabel control={<Checkbox otherProps onChange={handleNegativeExponent} />} label="Negative Exponent" />
+
             <Box>
                 <Typography variant='body1'>Your Input</Typography>
                 <Typography variant='h4' sx={{ mb: 2, mt: 0 }}><b>{props.primary}</b>x10<sup><b>{props.base}</b></sup></Typography>
