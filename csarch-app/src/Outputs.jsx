@@ -18,7 +18,8 @@ export default function Outputs(props) {
     function decToBinary(n) {
         // array to store binary number
         let binaryNum = new Array(32);
-        let reverseArray = [0]; // Have sign bit ready (set to + for now)
+        //let reverseArray = [0]; // Have sign bit ready (set to + for now)
+        let reverseArray = [];
 
         // counter for binary array
         let i = 0;
@@ -82,7 +83,45 @@ export default function Outputs(props) {
     }
 
     // 5) Get Densley Packed of per 3 digits in decimal
-    
+    function dpCoefCont (decimal) {
+        var aN = 0;
+        var bN = 0;
+        var cN = 0;
+
+        console.log("STARTINGSTARTINGSTARTINGSTARTINGSTARTING");
+
+        for(let i = 1; i < 16; i++) {
+            if(i % 3 === 0) {
+                //Perform Densley Packed Algo
+                aN = decimal.toString()[i-3]
+                bN = decimal.toString()[i-2]
+                cN = decimal.toString()[i-1]
+
+                aN = decToBinary(aN)
+                bN = decToBinary(bN)
+                cN = decToBinary(cN)
+
+                while(aN.length < 4)
+                    aN.unshift(0)
+                
+                while(bN.length < 4)
+                    bN.unshift(0)
+                
+                while(cN.length < 4)
+                    cN.unshift(0)
+
+                //Densley Packed Conversion
+                
+                
+                console.log("-----------------");
+                console.log('a: ' + aN)
+                console.log('b: ' + bN)
+                console.log('c: ' + cN)
+            }
+        }
+    }
+
+    dpCoefCont(decimal);
     
 
     return (
@@ -109,7 +148,7 @@ export default function Outputs(props) {
                             </TableCell>
                             <TableCell align="right">
                                 <Typography variant="h5">
-                                    {sign} | {comboField} | {expoCont}
+                                    {sign} | {comboField} | {expoCont} | 
                                     <IconButton>
                                         <ContentCopyIcon />
                                     </IconButton >
