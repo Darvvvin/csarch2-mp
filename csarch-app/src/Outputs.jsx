@@ -61,7 +61,7 @@ export default function Outputs(props) {
     // ComboField   | Type      | Exps MSB  | Coef MSD
     // a b c d e    | Finite    | a b       | 0 c d e
     if(parseInt(msd) <= 7) {
-        console.log("LESS THAN 7!")
+        //console.log("LESS THAN 7!")
         comboField.push(eBar[0]); // a
         comboField.push(eBar[1]); // b
 
@@ -95,12 +95,14 @@ export default function Outputs(props) {
         var bN = 0;
         var cN = 0;
 
-        for(let i = 1; i < 16; i++) {
-            if(i % 3 === 0) {
+        var finalArr = []
+
+        for(let l = 1; l < 16; l++) {
+            if(l % 3 === 0) {
                 //Perform Densley Packed Algo
-                aN = decimal.toString()[i-3]
-                bN = decimal.toString()[i-2]
-                cN = decimal.toString()[i-1]
+                aN = decimal.toString()[l-2]
+                bN = decimal.toString()[l-1]
+                cN = decimal.toString()[l]
 
                 aN = decToBinary(aN)
                 bN = decToBinary(bN)
@@ -116,7 +118,141 @@ export default function Outputs(props) {
                     cN.unshift(0)
 
                 //Densley Packed Conversion Here
+                var a = aN[0]
+                var b = aN[1]
+                var c = aN[2]
+                var d = aN[3]
 
+                var e = bN[0]
+                var f = bN[1]
+                var g = bN[2]
+                var h = bN[3]
+
+                var i = cN[0]
+                var j = cN[1]
+                var k = cN[2]
+                var m = cN[3]
+
+                if (a === 0 && e === 0 && i === 0) {
+                    finalArr.push(b)
+                    finalArr.push(c)
+                    finalArr.push(d)
+
+                    finalArr.push(f)
+                    finalArr.push(g)
+                    finalArr.push(h)
+
+                    finalArr.push(0)
+
+                    finalArr.push(j)
+                    finalArr.push(k)
+                    finalArr.push(m)
+
+                } else if (a === 0 && e === 0 && i === 1) {
+                    finalArr.push(b)
+                    finalArr.push(c)
+                    finalArr.push(d)
+
+                    finalArr.push(f)
+                    finalArr.push(g)
+                    finalArr.push(h)
+
+                    finalArr.push(1)
+
+                    finalArr.push(0)
+                    finalArr.push(0)
+                    finalArr.push(m)
+
+                } else if (a === 0 && e === 1 && i === 0) {
+                    finalArr.push(b)
+                    finalArr.push(c)
+                    finalArr.push(d)
+
+                    finalArr.push(j)
+                    finalArr.push(k)
+                    finalArr.push(h)
+
+                    finalArr.push(1)
+
+                    finalArr.push(0)
+                    finalArr.push(1)
+                    finalArr.push(m)
+
+                } else if (a === 0 && e === 1 && i === 1) {
+                    finalArr.push(b)
+                    finalArr.push(c)
+                    finalArr.push(d)
+
+                    finalArr.push(1)
+                    finalArr.push(0)
+                    finalArr.push(h)
+
+                    finalArr.push(1)
+
+                    finalArr.push(1)
+                    finalArr.push(1)
+                    finalArr.push(m)
+
+                } else if(a === 1 && e === 0 && i === 0) {
+                    finalArr.push(j)
+                    finalArr.push(k)
+                    finalArr.push(d)
+
+                    finalArr.push(f)
+                    finalArr.push(g)
+                    finalArr.push(h)
+
+                    finalArr.push(1)
+
+                    finalArr.push(1)
+                    finalArr.push(0)
+                    finalArr.push(m)
+
+                } else if(a === 1 && e === 0 && i === 1) {
+                    finalArr.push(f)
+                    finalArr.push(g)
+                    finalArr.push(d)
+
+                    finalArr.push(0)
+                    finalArr.push(1)
+                    finalArr.push(h)
+
+                    finalArr.push(1)
+
+                    finalArr.push(1)
+                    finalArr.push(1)
+                    finalArr.push(m)
+
+                } else if(a === 1 && e === 1 && i === 0) {
+                    finalArr.push(j)
+                    finalArr.push(k)
+                    finalArr.push(d)
+
+                    finalArr.push(0)
+                    finalArr.push(0)
+                    finalArr.push(h)
+
+                    finalArr.push(1)
+
+                    finalArr.push(1)
+                    finalArr.push(1)
+                    finalArr.push(m)
+
+                } else if(a === 1 && e === 1 && i === 1) {
+                    finalArr.push(0)
+                    finalArr.push(0)
+                    finalArr.push(d)
+
+                    finalArr.push(1)
+                    finalArr.push(1)
+                    finalArr.push(h)
+
+                    finalArr.push(1)
+
+                    finalArr.push(1)
+                    finalArr.push(1)
+                    finalArr.push(m)
+                }
 
                 // console.log("-----------------");
                 // console.log('a: ' + aN)
@@ -124,11 +260,12 @@ export default function Outputs(props) {
                 // console.log('c: ' + cN)
             }
         }
+
+        return finalArr;
     }
 
-    dpCoefCont(decimal);
+    var coefCount = dpCoefCont(decimal);
     
-
     return (
         <Box>
             <Box>
@@ -152,8 +289,8 @@ export default function Outputs(props) {
                                 Binary
                             </TableCell>
                             <TableCell align="right">
-                                <Typography variant="h5">
-                                    {sign} | {comboField} | {expoCont} | 
+                                <Typography variant="h6"><small>
+                                    {sign} | {comboField} | {expoCont} | {coefCount}</small>
                                     <IconButton>
                                         <ContentCopyIcon />
                                     </IconButton >
