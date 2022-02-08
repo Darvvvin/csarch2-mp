@@ -71,6 +71,15 @@ export default function Outputs(props) {
         comboField.push(eBar[1]); // d
         comboField.push(msdBinary[3]); // e
     }
+
+    // 4) Get Exponent Continuation (Remaining Digits [8])
+    var expoCont = []
+    var j = 0
+
+    for(let i = 2; i < 10; i++) {
+        expoCont[j] = eBar[i]
+        j++
+    }
     
 
     return (
@@ -97,7 +106,7 @@ export default function Outputs(props) {
                             </TableCell>
                             <TableCell align="right">
                                 <Typography variant="h5">
-                                    {sign} | {comboField}
+                                    {sign} | {comboField} | {expoCont}
                                     <IconButton>
                                         <ContentCopyIcon />
                                     </IconButton >
