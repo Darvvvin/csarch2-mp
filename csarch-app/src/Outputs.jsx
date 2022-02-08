@@ -80,6 +80,9 @@ export default function Outputs(props) {
         expoCont[j] = eBar[i]
         j++
     }
+
+    // 5) Get Densley Packed of per 3 digits in decimal
+    
     
 
     return (
@@ -111,6 +114,7 @@ export default function Outputs(props) {
                                         <ContentCopyIcon />
                                     </IconButton >
                                 </Typography>
+                                <Typography variant='overline'><small>Sign | Combination Field | Exponent Continuation | Coefficient Continuation</small></Typography>
                             </TableCell>
                         </TableRow>
 
