@@ -18,7 +18,7 @@ export default function Outputs(props) {
     function decToBinary(n) {
         // array to store binary number
         let binaryNum = new Array(32);
-        let reverseArray = [];
+        let reverseArray = [0]; // Have sign bit ready (set to + for now)
 
         // counter for binary array
         let i = 0;
@@ -37,9 +37,41 @@ export default function Outputs(props) {
         return reverseArray;
     }
 
+    // 0) Get sign
+    var sign = 0;
+
     // 1) Get e' in binary
     var eBar = base + 398
     eBar = decToBinary(eBar);
+
+    // 2) Get MSD in binary
+    var msd = decimal.toString()[0];
+    var msdBinary = decToBinary(msd);
+
+    // 3) Get Combination Field
+    var comboField = [];
+
+    // ComboField   | Type      | Exps MSB  | Coef MSD
+    // a b c d e    | Finite    | a b       | 0 c d e
+    if(0 <= parseInt(msd) && parseInt(msd) <= 7) {
+        comboField.push(eBar[0]); // a
+        comboField.push(eBar[1]); // b
+
+        comboField.push(msdBinary[1]); // c
+        comboField.push(msdBinary[2]); // d
+        comboField.push(msdBinary[3]); // e
+
+    // ComboField   | Type      | Exps MSB  | Coef MSD
+    // 1 1 c d e    | Finite    | c d       | 1 0 0 e
+    } else if (8 <= parseInt(msd) && parseInt(msd) <= 9) {
+        comboField.push(1);
+        comboField.push(1);
+        
+        comboField.push(eBar[2]); // c
+        comboField.push(eBar[3]); // d
+        comboField.push(msdBinary[3]); // e
+    }
+    
 
     return (
         <Box>
@@ -65,7 +97,7 @@ export default function Outputs(props) {
                             </TableCell>
                             <TableCell align="right">
                                 <Typography variant="h5">
-                                    {eBar}
+                                    {sign} | {comboField}
                                     <IconButton>
                                         <ContentCopyIcon />
                                     </IconButton >
