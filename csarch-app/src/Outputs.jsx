@@ -60,6 +60,12 @@ export default function Outputs(props) {
     // 0) Get sign
     var sign = 0;
 
+    if(negativeDecimal) {
+        sign = 1
+    } else {
+        sign = 0
+    }
+
     // 1) Get e' in binary
     var eBar = base + 398
     eBar = decToBinary(eBar);
@@ -282,6 +288,22 @@ export default function Outputs(props) {
 
     var coefCount = dpCoefCont(decimal);
 
+    function IsNegative(props) {
+        if (props.negativeSign) {
+            return '-'
+        } else {
+            return ''
+        }
+    }
+
+    function IsNegativeExp(props) {
+        if (props.negativeSign) {
+            return '-'
+        } else {
+            return ''
+        }
+    }
+
     return (
         <Box>
             <FormControlLabel control={<Checkbox otherProps onChange={handleNegativeDecimal} />} label="Negative Decimal" />
@@ -289,7 +311,7 @@ export default function Outputs(props) {
 
             <Box>
                 <Typography variant='body1'>Your Input</Typography>
-                <Typography variant='h4' sx={{ mb: 2, mt: 0 }}><b>{props.primary}</b>x10<sup><b>{props.base}</b></sup></Typography>
+                <Typography variant='h4' sx={{ mb: 2, mt: 0 }}><b><IsNegative negativeSign={negativeDecimal} />{props.primary}</b>x10<sup><b><IsNegativeExp negativeSign={negativeExponent} />{props.base}</b></sup></Typography>
             </Box>
 
             <TableContainer component={Paper} sx={{ mt: 1 }}>
