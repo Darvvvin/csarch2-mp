@@ -28,8 +28,8 @@ export default function Outputs(props) {
         setNegExp(event.target.checked);
     }
 
-    console.log('Decimal is ' + negativeDecimal)
-    console.log('Exponent is ' + negativeExponent)
+    // console.log('Decimal is ' + negativeDecimal)
+    // console.log('Exponent is ' + negativeExponent)
 
     function decToBinary(n) {
         // array to store binary number
@@ -67,11 +67,18 @@ export default function Outputs(props) {
     }
 
     // 1) Get e' in binary
-    var eBar = base + 398
+    var eBar = 0
+    if(negativeExponent) {
+        eBar = 398 - base
+    } else {
+        eBar = base + 398   
+    }
+    //console.log("Decimal = " + eBar)
     eBar = decToBinary(eBar);
 
     //Sign
     eBar.unshift(0) // 0 For now
+    //console.log("Binary eBar = " + eBar)
 
     // 2) Get MSD in binary
     var msd = decimal.toString()[0];
