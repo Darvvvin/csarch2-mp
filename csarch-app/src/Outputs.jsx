@@ -364,9 +364,22 @@ export default function Outputs(props) {
     console.log(binaryResultString.toString(16))
 
     var coefCount = dpCoefCont();
+    var hexResult = BinaryToHex()
 
     function BinaryToHex() {
-        
+        let hexResult = ''
+        for(let i = 0; i < 64; i += 4) {
+            let hexDigit = binaryResultString.substring(i, i+4)
+            let hexa = IndivBinaryToHex(hexDigit)
+            hexResult += hexa
+        }
+        return hexResult
+    }
+
+    function IndivBinaryToHex(number) {
+        var hexa = parseInt(number, 2).toString(16).toUpperCase();
+        console.log(hexa)
+        return hexa
     }
 
     function IsNegative(props) {
@@ -456,7 +469,7 @@ export default function Outputs(props) {
                             </TableCell>
                             <TableCell align="right">
                                 <Typography variant="h5">
-                                    {eBar}
+                                    {hexResult}
                                     <IconButton>
                                         <ContentCopyIcon />
                                     </IconButton >
