@@ -11,8 +11,8 @@ import Outputs from './Outputs';
 
 export default function Inputs() {
     var [method, setMethod] = React.useState('None');
-    var [primary, setPrimary] = React.useState('');
-    var [base, setBase] = React.useState('');
+    var [primary, setPrimary] = React.useState('0');
+    var [base, setBase] = React.useState('0');
 
     const handleChange = (event) => {
         setMethod(event.target.value);

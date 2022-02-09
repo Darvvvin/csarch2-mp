@@ -133,11 +133,13 @@ export default function Outputs(props) {
     var msdBinary = decToBinary(msd);
 
     // 3) Get Combination Field
-    var comboField = [];
+    var comboField = [0,0,0,0,0];
 
     // ComboField   | Type      | Exps MSB  | Coef MSD
     // a b c d e    | Finite    | a b       | 0 c d e
     if (origInputString[0] === '0') {
+        comboField = []
+
         comboField.push(eBar[0]); // a
         comboField.push(eBar[1]); // b
 
@@ -146,6 +148,8 @@ export default function Outputs(props) {
         comboField.push(0); // e
     } else {
         if (parseInt(msd) <= 7) {
+            comboField = []
+
             comboField.push(eBar[0]); // a
             comboField.push(eBar[1]); // b
 
@@ -156,6 +160,8 @@ export default function Outputs(props) {
             // ComboField   | Type      | Exps MSB  | Coef MSD
             // 1 1 c d e    | Finite    | c d       | 1 0 0 e
         } else if (parseInt(msd) > 7) {
+            comboField = []
+
             comboField.push(1);
             comboField.push(1);
 
@@ -457,7 +463,7 @@ export default function Outputs(props) {
                                         <ContentCopyIcon />
                                     </IconButton >
                                 </Typography>
-                                <Typography variant='overline'><small>Sign | Combination Field | Exponent Continuation | Coefficient Continuation</small></Typography>
+                                <Typography variant='overline'><small>Sign (1) | Combination Field (5) | Exponent Continuation (8) | Coefficient Continuation (50)</small></Typography>
                             </TableCell>
                         </TableRow>
 
