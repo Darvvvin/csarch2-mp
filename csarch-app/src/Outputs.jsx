@@ -18,26 +18,28 @@ export default function Outputs(props) {
     var [negativeExponent, setNegExp] = React.useState(false);
 
     var errorMessage = ''
+    var numberOfDecimals = 0
+    let origInputString = props.primary
 
-
-    if (props.primary) {
-        let origInputString = props.primary
-        let origInput = parseFloat(props.primary)
-
-        if (origInput % 1 !== 0) { // IF DECIMAL DETECTED
-            if (origInputString.length > 17) {
-                errorMessage = ' IS TOO LARGE!';
-            } 
-        } else if (origInputString.length > 16) { // IF WHOLE NUMBER DETECTED
-            errorMessage = ' IS TOO LARGE!';
+    if (props.primary) { // Process props.primary
+        if (origInputString.includes('.')) {
+            if (origInputString.length > 17)
+                errorMessage = 'IS TOO LARGE!'
+        } else {
+            if (origInputString.length > 16)
+                errorMessage = 'IS TOO LARGE!'
         }
-        
-        while (origInput % 1 !== 0) {
-            origInput *= 10;
+
+        for (let i = 0; i < origInputString.length; i++) {
+            if (origInputString.charAt(i) === '.') {
+                origInputString = origInputString.replace('.', '');
+                numberOfDecimals = origInputString.length - i;
+                i = origInputString.length
+            }
         }
     }
 
-    let decimal = parseInt(props.primary)
+    let decimal = parseInt(origInputString)
     let base = parseInt(props.base)
 
     const handleNegativeDecimal = (event) => {
@@ -94,6 +96,10 @@ export default function Outputs(props) {
         eBar = base + 398
     }
     //console.log("Decimal = " + eBar)
+    eBar -= numberOfDecimals;
+    console.log('Decimal: ' + decimal)
+    console.log('Base: ' +  eBar)
+    
     eBar = decToBinary(eBar);
 
     //Sign
