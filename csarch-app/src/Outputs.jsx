@@ -365,6 +365,10 @@ export default function Outputs(props) {
 
     var coefCount = dpCoefCont();
 
+    function BinaryToHex() {
+        
+    }
+
     function IsNegative(props) {
         if (props.negativeSign) {
             return '-'
