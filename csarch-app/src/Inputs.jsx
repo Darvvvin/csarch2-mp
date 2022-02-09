@@ -61,7 +61,7 @@ export default function Inputs() {
                 <TextField
                     required
                     onInput={(e) => {
-                        e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 16)
+                        e.target.value = Math.max(0, parseFloat(e.target.value)).toString().slice(0, 17)
                     }}
                     sx={{ flexGrow: 5, mr: 1 }}
                     id="outlined-basic"
