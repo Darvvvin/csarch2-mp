@@ -16,6 +16,17 @@ import Checkbox from '@mui/material/Checkbox';
 export default function Outputs(props) {
     var [negativeDecimal, setNegDec] = React.useState(false);
     var [negativeExponent, setNegExp] = React.useState(false);
+    
+    var errorMessage = ''
+
+    if(parseFloat(props.primary) % 1 !== 0) { // IF DETECTED
+        if(props.primary.length > 17) {
+            errorMessage = ' IS TOO LARGE!';
+        }
+    } else { // IF WHOLE NUMBER DETECTED
+        if(props.primary.length > 16)
+            errorMessage = ' IS TOO LARGE!';
+    }
 
     let decimal = parseInt(props.primary)
     let base = parseInt(props.base)
@@ -317,7 +328,7 @@ export default function Outputs(props) {
             <FormControlLabel control={<Checkbox otherProps onChange={handleNegativeExponent} />} label="Negative Exponent" />
 
             <Box>
-                <Typography variant='body1'>Your Input</Typography>
+                <Typography variant='body1'>Your Input <b style={{color: 'red'}}>{errorMessage}</b></Typography>
                 <Typography variant='h4' sx={{ mb: 2, mt: 0 }}><b><IsNegative negativeSign={negativeDecimal} />{props.primary}</b>x10<sup><b><IsNegativeExp negativeSign={negativeExponent} />{props.base}</b></sup></Typography>
             </Box>
 

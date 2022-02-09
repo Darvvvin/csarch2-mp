@@ -60,9 +60,9 @@ export default function Inputs() {
                 </FormControl>
                 <TextField
                     required
-                    onInput={(e) => {
-                        e.target.value = Math.max(0, parseFloat(e.target.value)).toString().slice(0, 17)
-                    }}
+                    // onInput={(e) => {
+                    //     e.target.value = Math.max(0, parseFloat(e.target.value)).toString().slice(0, 16)
+                    // }}
                     sx={{ flexGrow: 5, mr: 1 }}
                     id="outlined-basic"
                     type="number"
