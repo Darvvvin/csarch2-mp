@@ -386,7 +386,7 @@ export default function Outputs(props) {
     }
 
     function copyBinary() {
-        var text_to_copy = document.getElementById("binary-result").innerHTML;
+        var text_to_copy = binaryResultString;
 
         if (!navigator.clipboard) {
             var copyText = document.getElementById("binary-result");
@@ -439,7 +439,7 @@ export default function Outputs(props) {
                             </TableCell>
                             <TableCell align="right">
                                 <Typography variant="h6">
-                                    <small id='binary-result'>{sign}{comboField}{expoCont}{coefCount}</small>
+                                    <small id='binary-result'>{sign} | {comboField} | {expoCont} | {coefCount}</small>
                                     <IconButton onClick={copyBinary}>
                                         <ContentCopyIcon />
                                     </IconButton >
