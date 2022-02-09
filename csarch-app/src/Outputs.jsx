@@ -169,7 +169,7 @@ export default function Outputs(props) {
     var expoCont = []
     var j = 0
 
-    console.log('eBar = ' + eBar)
+    // console.log('eBar = ' + eBar)
 
     for (let i = 2; i < 10; i++) {
         expoCont[j] = eBar[i]
@@ -177,7 +177,7 @@ export default function Outputs(props) {
     }
 
     // 5) Get Densley Packed of per 3 digits in decimal
-    function dpCoefCont(decimal) {
+    function dpCoefCont() {
         var aN = 0;
         var bN = 0;
         var cN = 0;
@@ -341,15 +341,22 @@ export default function Outputs(props) {
                     finalArr.push(m)
                 }
 
-                console.log("-----------------");
-                console.log('a: ' + aN)
-                console.log('b: ' + bN)
-                console.log('c: ' + cN)
+                // console.log("-----------------");
+                // console.log('a: ' + aN)
+                // console.log('b: ' + bN)
+                // console.log('c: ' + cN)
             }
         }
 
         return finalArr;
     }
+
+    var binaryResult = []
+    var finFifty = dpCoefCont()
+    binaryResult.push(sign)
+    binaryResult = binaryResult.concat(comboField, expoCont, finFifty)
+
+    console.log(binaryResult)
 
     var coefCount = dpCoefCont(decimal);
 
