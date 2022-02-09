@@ -20,8 +20,19 @@ export default function Outputs(props) {
     var errorMessage = ''
     var numberOfDecimals = 0
     let origInputString = props.primary
+    let normalizedExp = ''
 
     if (props.primary) { // Process props.primary
+
+        if(origInputString.includes('.') && parseFloat(origInputString) % 1 === 0) {
+            for (let i = 0; i < origInputString.length; i++) {
+                if (origInputString.charAt(i) === '.') {
+                    origInputString = origInputString.substring(0, i)
+                    break
+                }
+            }
+        }
+    
         if (origInputString.includes('.')) {
             if (origInputString.length > 17)
                 errorMessage = 'IS TOO LARGE!'
@@ -37,6 +48,22 @@ export default function Outputs(props) {
                 i = origInputString.length
             }
         }
+
+        let zeroString = ''
+
+        for (let i = 0; i < 16 - origInputString.length; i++) {
+            zeroString += '0'
+        }
+
+        origInputString = zeroString + origInputString
+    }
+
+    if (props.base) {
+        let temp = props.base
+        if(negativeExponent) {
+            temp *= -1
+        }
+        normalizedExp = parseInt(temp - numberOfDecimals).toString()
     }
 
     let decimal = parseInt(origInputString)
@@ -49,9 +76,6 @@ export default function Outputs(props) {
     const handleNegativeExponent = (event) => {
         setNegExp(event.target.checked);
     }
-
-    // console.log('Decimal is ' + negativeDecimal)
-    // console.log('Exponent is ' + negativeExponent)
 
     function decToBinary(n) {
         // array to store binary number
@@ -89,22 +113,20 @@ export default function Outputs(props) {
     }
 
     // 1) Get e' in binary
-    var eBar = 0
+    let eBar = props.base
     if (negativeExponent) {
         eBar = 398 - base
     } else {
         eBar = base + 398
     }
-    //console.log("Decimal = " + eBar)
+
     eBar -= numberOfDecimals;
-    console.log('Decimal: ' + decimal)
-    console.log('Base: ' +  eBar)
-    
     eBar = decToBinary(eBar);
 
     //Sign
-    eBar.unshift(0) // 0 For now
-    //console.log("Binary eBar = " + eBar)
+    while(eBar.length < 10) {
+        eBar.unshift(0)
+    }
 
     // 2) Get MSD in binary
     var msd = decimal.toString()[0];
@@ -115,29 +137,39 @@ export default function Outputs(props) {
 
     // ComboField   | Type      | Exps MSB  | Coef MSD
     // a b c d e    | Finite    | a b       | 0 c d e
-    if (parseInt(msd) <= 7) {
-        //console.log("LESS THAN 7!")
+    if(origInputString[0] === '0') {
         comboField.push(eBar[0]); // a
         comboField.push(eBar[1]); // b
 
-        comboField.push(msdBinary[1]); // c
-        comboField.push(msdBinary[2]); // d
-        comboField.push(msdBinary[3]); // e
-
-        // ComboField   | Type      | Exps MSB  | Coef MSD
-        // 1 1 c d e    | Finite    | c d       | 1 0 0 e
-    } else if (8 <= parseInt(msd)) {
-        comboField.push(1);
-        comboField.push(1);
-
-        comboField.push(eBar[0]); // c
-        comboField.push(eBar[1]); // d
-        comboField.push(msdBinary[3]); // e
+        comboField.push(0); // c
+        comboField.push(0); // d
+        comboField.push(0); // e
+    } else {
+        if (parseInt(msd) <= 7) {
+            comboField.push(eBar[0]); // a
+            comboField.push(eBar[1]); // b
+    
+            comboField.push(msdBinary[1]); // c
+            comboField.push(msdBinary[2]); // d
+            comboField.push(msdBinary[3]); // e
+    
+            // ComboField   | Type      | Exps MSB  | Coef MSD
+            // 1 1 c d e    | Finite    | c d       | 1 0 0 e
+        } else if (parseInt(msd) > 7) {
+            comboField.push(1);
+            comboField.push(1);
+    
+            comboField.push(eBar[0]); // c
+            comboField.push(eBar[1]); // d
+            comboField.push(msdBinary[3]); // e
+        }
     }
 
     // 4) Get Exponent Continuation (Remaining Digits [8])
     var expoCont = []
     var j = 0
+
+    console.log('eBar = ' + eBar)
 
     for (let i = 2; i < 10; i++) {
         expoCont[j] = eBar[i]
@@ -155,9 +187,9 @@ export default function Outputs(props) {
         for (let l = 1; l < 16; l++) {
             if (l % 3 === 0) {
                 //Perform Densley Packed Algo
-                aN = decimal.toString()[l - 2]
-                bN = decimal.toString()[l - 1]
-                cN = decimal.toString()[l]
+                aN = origInputString[l - 2]
+                bN = origInputString[l - 1]
+                cN = origInputString[l]
 
                 aN = decToBinary(aN)
                 bN = decToBinary(bN)
@@ -309,10 +341,10 @@ export default function Outputs(props) {
                     finalArr.push(m)
                 }
 
-                // console.log("-----------------");
-                // console.log('a: ' + aN)
-                // console.log('b: ' + bN)
-                // console.log('c: ' + cN)
+                console.log("-----------------");
+                console.log('a: ' + aN)
+                console.log('b: ' + bN)
+                console.log('c: ' + cN)
             }
         }
 
@@ -345,6 +377,11 @@ export default function Outputs(props) {
             <Box>
                 <Typography variant='body1'>Your Input <b style={{ color: 'red' }}>{errorMessage}</b></Typography>
                 <Typography variant='h4' sx={{ mb: 2, mt: 0 }}><b><IsNegative negativeSign={negativeDecimal} />{props.primary}</b>x10<sup><b><IsNegativeExp negativeSign={negativeExponent} />{props.base}</b></sup></Typography>
+            </Box>
+
+            <Box>
+                <Typography variant='body1'>Normalized Input <b style={{ color: 'red' }}>{errorMessage}</b></Typography>
+                <Typography variant='h4' sx={{ mb: 2, mt: 0 }}><b><IsNegative negativeSign={negativeDecimal} />{origInputString}</b>x10<sup><b>{normalizedExp}</b></sup></Typography>
             </Box>
 
             <TableContainer component={Paper} sx={{ mt: 1 }}>
