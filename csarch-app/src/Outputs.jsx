@@ -24,7 +24,7 @@ export default function Outputs(props) {
 
     if (props.primary) { // Process props.primary
 
-        if(origInputString.includes('.') && parseFloat(origInputString) % 1 === 0) {
+        if (origInputString.includes('.') && parseFloat(origInputString) % 1 === 0) {
             for (let i = 0; i < origInputString.length; i++) {
                 if (origInputString.charAt(i) === '.') {
                     origInputString = origInputString.substring(0, i)
@@ -32,7 +32,7 @@ export default function Outputs(props) {
                 }
             }
         }
-    
+
         if (origInputString.includes('.')) {
             if (origInputString.length > 17)
                 errorMessage = 'IS TOO LARGE!'
@@ -60,7 +60,7 @@ export default function Outputs(props) {
 
     if (props.base) {
         let temp = props.base
-        if(negativeExponent) {
+        if (negativeExponent) {
             temp *= -1
         }
         normalizedExp = parseInt(temp - numberOfDecimals).toString()
@@ -124,7 +124,7 @@ export default function Outputs(props) {
     eBar = decToBinary(eBar);
 
     //Sign
-    while(eBar.length < 10) {
+    while (eBar.length < 10) {
         eBar.unshift(0)
     }
 
@@ -137,7 +137,7 @@ export default function Outputs(props) {
 
     // ComboField   | Type      | Exps MSB  | Coef MSD
     // a b c d e    | Finite    | a b       | 0 c d e
-    if(origInputString[0] === '0') {
+    if (origInputString[0] === '0') {
         comboField.push(eBar[0]); // a
         comboField.push(eBar[1]); // b
 
@@ -148,17 +148,17 @@ export default function Outputs(props) {
         if (parseInt(msd) <= 7) {
             comboField.push(eBar[0]); // a
             comboField.push(eBar[1]); // b
-    
+
             comboField.push(msdBinary[1]); // c
             comboField.push(msdBinary[2]); // d
             comboField.push(msdBinary[3]); // e
-    
+
             // ComboField   | Type      | Exps MSB  | Coef MSD
             // 1 1 c d e    | Finite    | c d       | 1 0 0 e
         } else if (parseInt(msd) > 7) {
             comboField.push(1);
             comboField.push(1);
-    
+
             comboField.push(eBar[0]); // c
             comboField.push(eBar[1]); // d
             comboField.push(msdBinary[3]); // e
@@ -369,6 +369,28 @@ export default function Outputs(props) {
         }
     }
 
+    function copyBinary() {
+        var text_to_copy = document.getElementById("binary-result").innerHTML;
+
+        if (!navigator.clipboard) {
+            var copyText = document.getElementById("binary-result");
+            var textArea = document.createElement("textarea");
+            textArea.value = copyText.textContent;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("Copy");
+            textArea.remove();
+        } else {
+            navigator.clipboard.writeText(text_to_copy).then(
+                function () {
+                })
+                .catch(
+                    function () {
+                        alert("Error Copying. Please use a Chromium-based Browser to use the copy feature -Darvin"); // error
+                    });
+        }
+    }
+
     return (
         <Box>
             <FormControlLabel control={<Checkbox otherProps onChange={handleNegativeDecimal} />} label="Negative Decimal" />
@@ -400,9 +422,9 @@ export default function Outputs(props) {
                                 Binary
                             </TableCell>
                             <TableCell align="right">
-                                <Typography variant="h6"><small>
-                                    {sign} | {comboField} | {expoCont} | {coefCount}</small>
-                                    <IconButton>
+                                <Typography variant="h6">
+                                    <small id='binary-result'>{sign}{comboField}{expoCont}{coefCount}</small>
+                                    <IconButton onClick={copyBinary}>
                                         <ContentCopyIcon />
                                     </IconButton >
                                 </Typography>
