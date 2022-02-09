@@ -353,12 +353,17 @@ export default function Outputs(props) {
 
     var binaryResult = []
     var finFifty = dpCoefCont()
+
     binaryResult.push(sign)
     binaryResult = binaryResult.concat(comboField, expoCont, finFifty)
 
-    console.log(binaryResult)
+    var binaryResultString = binaryResult.toString()
 
-    var coefCount = dpCoefCont(decimal);
+    binaryResultString = binaryResultString.replaceAll(',','')
+
+    console.log(binaryResultString.toString(16))
+
+    var coefCount = dpCoefCont();
 
     function IsNegative(props) {
         if (props.negativeSign) {
