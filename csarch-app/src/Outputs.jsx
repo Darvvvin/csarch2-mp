@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { IconButton, Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import { Box, fontSize } from '@mui/system';
 
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -20,9 +20,23 @@ export default function Outputs(props) {
     var errorMessage = ''
     var numberOfDecimals = 0
     let origInputString = props.primary
+    let inputtedExp = ''
     let normalizedExp = ''
+    let isValid = true
 
     if (props.primary) { // Process props.primary
+
+        if (origInputString.includes('.')) {
+            if (origInputString.length > 17) {
+                errorMessage = 'IS TOO LARGE!'
+                isValid = false
+            }
+        } else {
+            if (origInputString.length > 16) {
+                errorMessage = 'IS TOO LARGE!'
+                isValid = false
+            }
+        }
 
         if (origInputString.includes('.') && parseFloat(origInputString) % 1 === 0) {
             for (let i = 0; i < origInputString.length; i++) {
@@ -31,14 +45,6 @@ export default function Outputs(props) {
                     break
                 }
             }
-        }
-
-        if (origInputString.includes('.')) {
-            if (origInputString.length > 17)
-                errorMessage = 'IS TOO LARGE!'
-        } else {
-            if (origInputString.length > 16)
-                errorMessage = 'IS TOO LARGE!'
         }
 
         for (let i = 0; i < origInputString.length; i++) {
@@ -63,6 +69,7 @@ export default function Outputs(props) {
         if (negativeExponent) {
             temp *= -1
         }
+        inputtedExp = temp
         normalizedExp = parseInt(temp - numberOfDecimals).toString()
     }
 
@@ -123,7 +130,6 @@ export default function Outputs(props) {
     eBar -= numberOfDecimals;
     eBar = decToBinary(eBar);
 
-    //Sign
     while (eBar.length < 10) {
         eBar.unshift(0)
     }
@@ -174,8 +180,6 @@ export default function Outputs(props) {
     // 4) Get Exponent Continuation (Remaining Digits [8])
     var expoCont = []
     var j = 0
-
-    // console.log('eBar = ' + eBar)
 
     for (let i = 2; i < 10; i++) {
         expoCont[j] = eBar[i]
@@ -346,11 +350,6 @@ export default function Outputs(props) {
                     finalArr.push(1)
                     finalArr.push(m)
                 }
-
-                // console.log("-----------------");
-                // console.log('a: ' + aN)
-                // console.log('b: ' + bN)
-                // console.log('c: ' + cN)
             }
         }
 
@@ -365,9 +364,7 @@ export default function Outputs(props) {
 
     var binaryResultString = binaryResult.toString()
 
-    binaryResultString = binaryResultString.replaceAll(',','')
-
-    console.log(binaryResultString.toString(16))
+    binaryResultString = binaryResultString.replaceAll(',', '')
 
     var coefCount = dpCoefCont();
     var hexResult = BinaryToHex()
@@ -383,7 +380,7 @@ export default function Outputs(props) {
     }
 
     function IndivBinaryToHex(number) {
-        var hexa = parseInt(number, 2).toString(16).toUpperCase();
+        let hexa = parseInt(number, 2).toString(16).toUpperCase();
         console.log(hexa)
         return hexa
     }
@@ -432,13 +429,13 @@ export default function Outputs(props) {
             <FormControlLabel control={<Checkbox otherProps onChange={handleNegativeExponent} />} label="Negative Exponent" />
 
             <Box>
-                <Typography variant='body1'>Your Input <b style={{ color: 'red' }}>{errorMessage}</b></Typography>
-                <Typography variant='h4' sx={{ mb: 2, mt: 0 }}><b><IsNegative negativeSign={negativeDecimal} />{props.primary}</b>x10<sup><b><IsNegativeExp negativeSign={negativeExponent} />{props.base}</b></sup></Typography>
+                <Typography variant='body1'>Your Input</Typography>
+                <Typography variant='h4' sx={{ mb: 2, mt: 0 }}><b><IsNegative negativeSign={negativeDecimal} />{props.primary}</b>x10<sup><b>{inputtedExp}</b></sup></Typography>
             </Box>
 
             <Box>
                 <Typography variant='body1'>Normalized Input <b style={{ color: 'red' }}>{errorMessage}</b></Typography>
-                <Typography variant='h4' sx={{ mb: 2, mt: 0 }}><b><IsNegative negativeSign={negativeDecimal} />{origInputString}</b>x10<sup><b>{normalizedExp}</b></sup></Typography>
+                <Typography variant='h4' sx={{ mb: 2, mt: 0 }}><b><IsNegative negativeSign={negativeDecimal}/>{origInputString}</b>x10<sup>{normalizedExp > 369 || normalizedExp < -398 ? <b style={{ color: 'red' }}>{normalizedExp}<span style={{fontSize: '10pt'}}>(Invalid exponent!)</span></b> : <b>{normalizedExp} </b>}</sup></Typography>
             </Box>
 
             <TableContainer component={Paper} sx={{ mt: 1 }}>
@@ -458,7 +455,7 @@ export default function Outputs(props) {
                             </TableCell>
                             <TableCell align="right">
                                 <Typography variant="h6">
-                                    <small id='binary-result'>{sign} | {comboField} | {expoCont} | {coefCount}</small>
+                                    <small id='binary-result'>{normalizedExp > 369 || normalizedExp < -398 || !isValid ? <span>n/a</span> : <span>{sign} | {comboField} | {expoCont} | {coefCount}</span>}</small>
                                     <IconButton onClick={copyBinary}>
                                         <ContentCopyIcon />
                                     </IconButton >
@@ -475,7 +472,7 @@ export default function Outputs(props) {
                             </TableCell>
                             <TableCell align="right">
                                 <Typography variant="h5">
-                                    {hexResult}
+                                        <small>{normalizedExp > 369 || normalizedExp < -398 || !isValid ? <span>n/a</span> : <span>{hexResult}</span>}</small>
                                     <IconButton>
                                         <ContentCopyIcon />
                                     </IconButton >
