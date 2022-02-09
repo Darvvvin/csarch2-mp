@@ -16,16 +16,25 @@ import Checkbox from '@mui/material/Checkbox';
 export default function Outputs(props) {
     var [negativeDecimal, setNegDec] = React.useState(false);
     var [negativeExponent, setNegExp] = React.useState(false);
-    
+
     var errorMessage = ''
 
-    if(parseFloat(props.primary) % 1 !== 0) { // IF DETECTED
-        if(props.primary.length > 17) {
+
+    if (props.primary) {
+        let origInputString = props.primary
+        let origInput = parseFloat(props.primary)
+
+        if (origInput % 1 !== 0) { // IF DECIMAL DETECTED
+            if (origInputString.length > 17) {
+                errorMessage = ' IS TOO LARGE!';
+            } 
+        } else if (origInputString.length > 16) { // IF WHOLE NUMBER DETECTED
             errorMessage = ' IS TOO LARGE!';
         }
-    } else { // IF WHOLE NUMBER DETECTED
-        if(props.primary.length > 16)
-            errorMessage = ' IS TOO LARGE!';
+        
+        while (origInput % 1 !== 0) {
+            origInput *= 10;
+        }
     }
 
     let decimal = parseInt(props.primary)
@@ -71,7 +80,7 @@ export default function Outputs(props) {
     // 0) Get sign
     var sign = 0;
 
-    if(negativeDecimal) {
+    if (negativeDecimal) {
         sign = 1
     } else {
         sign = 0
@@ -79,10 +88,10 @@ export default function Outputs(props) {
 
     // 1) Get e' in binary
     var eBar = 0
-    if(negativeExponent) {
+    if (negativeExponent) {
         eBar = 398 - base
     } else {
-        eBar = base + 398   
+        eBar = base + 398
     }
     //console.log("Decimal = " + eBar)
     eBar = decToBinary(eBar);
@@ -328,7 +337,7 @@ export default function Outputs(props) {
             <FormControlLabel control={<Checkbox otherProps onChange={handleNegativeExponent} />} label="Negative Exponent" />
 
             <Box>
-                <Typography variant='body1'>Your Input <b style={{color: 'red'}}>{errorMessage}</b></Typography>
+                <Typography variant='body1'>Your Input <b style={{ color: 'red' }}>{errorMessage}</b></Typography>
                 <Typography variant='h4' sx={{ mb: 2, mt: 0 }}><b><IsNegative negativeSign={negativeDecimal} />{props.primary}</b>x10<sup><b><IsNegativeExp negativeSign={negativeExponent} />{props.base}</b></sup></Typography>
             </Box>
 
