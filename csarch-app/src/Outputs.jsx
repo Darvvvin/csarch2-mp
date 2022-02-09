@@ -134,6 +134,8 @@ export default function Outputs(props) {
         eBar.unshift(0)
     }
 
+    console.log(eBar)
+
     // 2) Get MSD in binary
     var msd = decimal.toString()[0];
     var msdBinary = decToBinary(msd);
@@ -381,7 +383,7 @@ export default function Outputs(props) {
 
     function IndivBinaryToHex(number) {
         let hexa = parseInt(number, 2).toString(16).toUpperCase();
-        console.log(hexa)
+        // console.log(hexa)
         return hexa
     }
 
@@ -435,7 +437,7 @@ export default function Outputs(props) {
 
             <Box>
                 <Typography variant='body1'>Normalized Input <b style={{ color: 'red' }}>{errorMessage}</b></Typography>
-                <Typography variant='h4' sx={{ mb: 2, mt: 0 }}><b><IsNegative negativeSign={negativeDecimal}/>{origInputString}</b>x10<sup>{normalizedExp > 369 || normalizedExp < -398 ? <b style={{ color: 'red' }}>{normalizedExp}<span style={{fontSize: '10pt'}}>(Invalid exponent!)</span></b> : <b>{normalizedExp} </b>}</sup></Typography>
+                <Typography variant='h4' sx={{ mb: 2, mt: 0 }}><b><IsNegative negativeSign={negativeDecimal}/>{origInputString}</b>x10<sup>{normalizedExp > 369 || normalizedExp < -398 ? <b style={{ color: '#04879c' }}>{normalizedExp}<span style={{fontSize: '10pt'}}>(Special case!)</span></b> : <b>{normalizedExp} </b>}</sup></Typography>
             </Box>
 
             <TableContainer component={Paper} sx={{ mt: 1 }}>
@@ -455,7 +457,8 @@ export default function Outputs(props) {
                             </TableCell>
                             <TableCell align="right">
                                 <Typography variant="h6">
-                                    <small id='binary-result'>{normalizedExp > 369 || normalizedExp < -398 || !isValid ? <span>n/a</span> : <span>{sign} | {comboField} | {expoCont} | {coefCount}</span>}</small>
+                                    <small id='binary-result'>{sign} | {comboField} | {expoCont} | {coefCount}</small>
+                                    {/* {normalizedExp > 369 || normalizedExp < -398 || !isValid ? <span>n/a</span> : <span>{sign} | {comboField} | {expoCont} | {coefCount}</span>} */}
                                     <IconButton onClick={copyBinary}>
                                         <ContentCopyIcon />
                                     </IconButton >
@@ -472,7 +475,7 @@ export default function Outputs(props) {
                             </TableCell>
                             <TableCell align="right">
                                 <Typography variant="h5">
-                                        <small>{normalizedExp > 369 || normalizedExp < -398 || !isValid ? <span>n/a</span> : <span>{hexResult}</span>}</small>
+                                        <small>{hexResult}</small>
                                     <IconButton>
                                         <ContentCopyIcon />
                                     </IconButton >
