@@ -66,7 +66,11 @@ export default function Outputs(props) {
                     origInputString = origInputString.substring(0, 16)
                     tempRestore = origInputString;
 
-                    origInputString = parseInt(origInputString) + 1
+                    if(negativeDecimal) {
+                        origInputString = parseInt(origInputString) - 1
+                    } else {
+                        origInputString = parseInt(origInputString) + 1
+                    }
 
                     origInputString = origInputString.toString()
 
@@ -78,7 +82,11 @@ export default function Outputs(props) {
                     origInputString = origInputString.substring(0, 16)
                     tempRestore = origInputString;
 
-                    origInputString = parseInt(origInputString) - 1
+                    if(negativeDecimal) {
+                        origInputString = parseInt(origInputString) + 1
+                    } else {
+                        origInputString = parseInt(origInputString) - 1
+                    }
 
                     origInputString = origInputString.toString()
 
@@ -91,13 +99,17 @@ export default function Outputs(props) {
                         origInputString = origInputString.substring(0, 16)
                         tempRestore = origInputString;
 
-                        origInputString = parseInt(origInputString) + 1
+                        if(negativeDecimal) {
+                            origInputString = parseInt(origInputString) - 1
+                        } else {
+                            origInputString = parseInt(origInputString) + 1
+                        }
                         origInputString = origInputString.toString()
 
                         if(origInputString.length > 16) {
                             origInputString = tempRestore
                         }
-                        
+
                     } else { // Truncate
                         origInputString = origInputString.substring(0, 16)
                     }
@@ -113,9 +125,10 @@ export default function Outputs(props) {
         //         }
         //     }
         // }
-        origInputString = parseFloat(origInputString);
-
-        origInputString = origInputString.toString();
+        if (origInputString.includes('.')) {
+            origInputString = parseFloat(origInputString);
+            origInputString = origInputString.toString();
+        }
 
         for (let i = 0; i < origInputString.length; i++) {
             if (origInputString.charAt(i) === '.') {
