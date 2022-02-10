@@ -26,33 +26,96 @@ export default function Outputs(props) {
     let normalizedExp = ''
 
     if (props.primary) { // Process props.primary
-
         if (origInputString.includes('.')) {
+            //var origLen = 0;
+            var tempRestore = 0;
+
             if (origInputString.length > 17) {
                 if(props.method === 'None') {
                     errorMessage = 'IS TOO LARGE!'
-                } else {
-                    origInputString = origInputString.substring(0, 17)
+                } else if(props.method === 'Truncate') {
+                    // origInputString = origInputString.substring(0, 17)
+
+                } else if(props.method === 'Inf') {
+                    // origLen = origInputString.length
+
+                    // origInputString = origInputString.substring(0, 17)
+                    // tempRestore = origInputString;
+
+                    // origInputString = parseFloat(origInputString) + (10 ** (-(origLen - 16)))
+
+                    // origInputString = origInputString.toString()
+                    
+                    // if(origInputString.length > 17) {
+                    //     origInputString = tempRestore
+                    // }
+                } else if(props.method === 'NegInf') {
+
+                } else if(props.method === 'Even') {
+
                 }
             }
         } else {
             if (origInputString.length > 16) {
                 if(props.method === 'None') {
                     errorMessage = 'IS TOO LARGE!'
-                } else {
+                } else if(props.method === 'Truncate') {
                     origInputString = origInputString.substring(0, 16)
+
+                } else if(props.method === 'Inf') {
+                    origInputString = origInputString.substring(0, 16)
+                    tempRestore = origInputString;
+
+                    origInputString = parseInt(origInputString) + 1
+
+                    origInputString = origInputString.toString()
+
+                    if(origInputString.length > 16) {
+                        origInputString = tempRestore
+                    }
+
+                } else if(props.method === 'NegInf') {
+                    origInputString = origInputString.substring(0, 16)
+                    tempRestore = origInputString;
+
+                    origInputString = parseInt(origInputString) - 1
+
+                    origInputString = origInputString.toString()
+
+                    if(origInputString.length > 16) {
+                        origInputString = tempRestore
+                    }
+
+                } else if(props.method === 'Even') {
+                    if(parseInt(origInputString.charAt(16)) >= 5) { // +Inf
+                        origInputString = origInputString.substring(0, 16)
+                        tempRestore = origInputString;
+
+                        origInputString = parseInt(origInputString) + 1
+                        origInputString = origInputString.toString()
+
+                        if(origInputString.length > 16) {
+                            origInputString = tempRestore
+                        }
+                        
+                    } else { // Truncate
+                        origInputString = origInputString.substring(0, 16)
+                    }
                 }
             }
         }
 
-        if (origInputString.includes('.') && parseFloat(origInputString) % 1 === 0) {
-            for (let i = 0; i < origInputString.length; i++) {
-                if (origInputString.charAt(i) === '.') {
-                    origInputString = origInputString.substring(0, i)
-                    break
-                }
-            }
-        }
+        // if (origInputString.includes('.') && parseFloat(origInputString) % 1 === 0) {
+        //     for (let i = 0; i < origInputString.length; i++) {
+        //         if (origInputString.charAt(i) === '.') {
+        //             origInputString = origInputString.substring(0, i)
+        //             break
+        //         }
+        //     }
+        // }
+        origInputString = parseFloat(origInputString);
+
+        origInputString = origInputString.toString();
 
         for (let i = 0; i < origInputString.length; i++) {
             if (origInputString.charAt(i) === '.') {
@@ -455,7 +518,7 @@ export default function Outputs(props) {
 
             <Box>
                 <Typography variant='body1'>Your Input</Typography>
-                <Typography variant='h4' sx={{ mb: 2, mt: 0 }}><b><IsNegative negativeSign={negativeDecimal} />{props.primary === '' ? <span>NaN </span> : <span>{props.primary}</span>}</b>x10<sup><b>{inputtedExp}</b></sup></Typography>
+                <Typography variant='h4' sx={{ mb: 2, mt: 0 }}><b><IsNegative negativeSign={negativeDecimal} />{props.primary === '' ? <span>NaN </span> : <span>{props.primary}</span>}</b>x10<sup><b>{props.base === '' ? <span>NaN </span> : <span>{inputtedExp}</span>}</b></sup></Typography>
             </Box>
 
             <Box>
