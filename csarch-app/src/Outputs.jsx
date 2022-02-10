@@ -140,9 +140,11 @@ export default function Outputs(props) {
     // 3) Get Combination Field
     var comboField = [0,0,0,0,0];
 
-    if(normalizedExp > 369 || normalizedExp < -398) {
+    if (props.primary === '') {
+        comboField = [1,1,1,1,1];
+    } else if(normalizedExp > 369 || normalizedExp < -398) {
         comboField = [1,1,1,1,0];
-        console.log(comboField)
+        //console.log(comboField)
     } else {
         if (parseInt(msd) <= 7) {
             comboField = []
@@ -443,12 +445,12 @@ export default function Outputs(props) {
 
             <Box>
                 <Typography variant='body1'>Your Input</Typography>
-                <Typography variant='h4' sx={{ mb: 2, mt: 0 }}><b><IsNegative negativeSign={negativeDecimal} />{props.primary}</b>x10<sup><b>{inputtedExp}</b></sup></Typography>
+                <Typography variant='h4' sx={{ mb: 2, mt: 0 }}><b><IsNegative negativeSign={negativeDecimal} />{props.primary === '' ? <span>NaN </span> : <span>{props.primary}</span>}</b>x10<sup><b>{inputtedExp}</b></sup></Typography>
             </Box>
 
             <Box>
                 <Typography variant='body1'>Normalized Input <b style={{ color: 'red' }}>{errorMessage}</b></Typography>
-                <Typography variant='h4' sx={{ mb: 2, mt: 0 }}><b><IsNegative negativeSign={negativeDecimal}/>{origInputString}</b>x10<sup>{normalizedExp > 369 || normalizedExp < -398 ? <b style={{ color: '#04879c' }}>{normalizedExp}<span style={{fontSize: '10pt'}}>(Special case!)</span></b> : <b>{normalizedExp} </b>}</sup></Typography>
+                <Typography variant='h4' sx={{ mb: 2, mt: 0 }}><b><IsNegative negativeSign={negativeDecimal}/>{props.primary === '' ? <span>NaN </span> : <span>{origInputString}</span>}</b>x10<sup>{normalizedExp > 369 || normalizedExp < -398 ? <b style={{ color: '#04879c' }}>{normalizedExp}<span style={{fontSize: '10pt'}}>(Special case!)</span></b> : <b>{normalizedExp} </b>}</sup></Typography>
             </Box>
 
             <TableContainer component={Paper} sx={{ mt: 1 }}>
