@@ -55,7 +55,7 @@ export default function Inputs() {
                         onChange={handleChange}
                     >
                         <MenuItem value={'None'}>None</MenuItem>
-                        <MenuItem value={'Round'}>Round-Off Method</MenuItem>
+                        <MenuItem value={'Round'}>Round-Off (Truncate)</MenuItem>
                     </Select>
                 </FormControl>
                 <TextField
@@ -80,7 +80,7 @@ export default function Inputs() {
                 />
             </Box>
             {/* <Button variant="contained" onClick={handleConvert} sx={{ minWidth: '100%', fontSize: '0.75em' }}><b>Convert</b></Button> */}
-            <Outputs primary={primary} base={base}/>
+            <Outputs primary={primary} base={base} method={method}/>
             <Typography variant='body2' sx={{mt: 2}}><u>Decimal-64 Converter by Chua, Buensalida & Darvin S13</u></Typography>
         </Box>
     );

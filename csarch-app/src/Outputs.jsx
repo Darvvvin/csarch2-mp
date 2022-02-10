@@ -17,6 +17,8 @@ export default function Outputs(props) {
     var [negativeDecimal, setNegDec] = React.useState(false);
     var [negativeExponent, setNegExp] = React.useState(false);
 
+    //console.log(props.method)
+
     var errorMessage = ''
     var numberOfDecimals = 0
     let origInputString = props.primary
@@ -27,11 +29,19 @@ export default function Outputs(props) {
 
         if (origInputString.includes('.')) {
             if (origInputString.length > 17) {
-                errorMessage = 'IS TOO LARGE!'
+                if(props.method === 'None') {
+                    errorMessage = 'IS TOO LARGE!'
+                } else {
+                    origInputString = origInputString.substring(0, 17)
+                }
             }
         } else {
             if (origInputString.length > 16) {
-                errorMessage = 'IS TOO LARGE!'
+                if(props.method === 'None') {
+                    errorMessage = 'IS TOO LARGE!'
+                } else {
+                    origInputString = origInputString.substring(0, 16)
+                }
             }
         }
 
