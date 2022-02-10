@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { IconButton, Typography } from '@mui/material';
-import { Box, fontSize } from '@mui/system';
+import { Box } from '@mui/system';
 
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -22,19 +22,16 @@ export default function Outputs(props) {
     let origInputString = props.primary
     let inputtedExp = ''
     let normalizedExp = ''
-    let isValid = true
 
     if (props.primary) { // Process props.primary
 
         if (origInputString.includes('.')) {
             if (origInputString.length > 17) {
                 errorMessage = 'IS TOO LARGE!'
-                isValid = false
             }
         } else {
             if (origInputString.length > 16) {
                 errorMessage = 'IS TOO LARGE!'
-                isValid = false
             }
         }
 
@@ -73,7 +70,7 @@ export default function Outputs(props) {
         normalizedExp = parseInt(temp - numberOfDecimals).toString()
     }
 
-    let decimal = parseInt(origInputString)
+    //let decimal = parseInt(origInputString)
     let base = parseInt(props.base)
 
     const handleNegativeDecimal = (event) => {
@@ -134,26 +131,18 @@ export default function Outputs(props) {
         eBar.unshift(0)
     }
 
-    console.log(eBar)
+    //console.log(eBar)
 
     // 2) Get MSD in binary
-    var msd = decimal.toString()[0];
+    var msd = origInputString.charAt(0);
     var msdBinary = decToBinary(msd);
 
     // 3) Get Combination Field
     var comboField = [0,0,0,0,0];
 
-    // ComboField   | Type      | Exps MSB  | Coef MSD
-    // a b c d e    | Finite    | a b       | 0 c d e
-    if (origInputString[0] === '0') {
-        comboField = []
-
-        comboField.push(eBar[0]); // a
-        comboField.push(eBar[1]); // b
-
-        comboField.push(0); // c
-        comboField.push(0); // d
-        comboField.push(0); // e
+    if(normalizedExp > 369 || normalizedExp < -398) {
+        comboField = [1,1,1,1,0];
+        console.log(comboField)
     } else {
         if (parseInt(msd) <= 7) {
             comboField = []
@@ -395,19 +384,41 @@ export default function Outputs(props) {
         }
     }
 
-    function IsNegativeExp(props) {
-        if (props.negativeSign) {
-            return '-'
-        } else {
-            return ''
-        }
-    }
+    // function IsNegativeExp(props) {
+    //     if (props.negativeSign) {
+    //         return '-'
+    //     } else {
+    //         return ''
+    //     }
+    // }
 
     function copyBinary() {
         var text_to_copy = binaryResultString;
 
         if (!navigator.clipboard) {
             var copyText = document.getElementById("binary-result");
+            var textArea = document.createElement("textarea");
+            textArea.value = copyText.textContent;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("Copy");
+            textArea.remove();
+        } else {
+            navigator.clipboard.writeText(text_to_copy).then(
+                function () {
+                })
+                .catch(
+                    function () {
+                        alert("Error Copying. Please use a Chromium-based Browser to use the copy feature -Darvin"); // error
+                    });
+        }
+    }
+
+    function copyHex() {
+        var text_to_copy = hexResult;
+
+        if (!navigator.clipboard) {
+            var copyText = document.getElementById("hex-result");
             var textArea = document.createElement("textarea");
             textArea.value = copyText.textContent;
             document.body.appendChild(textArea);
@@ -457,7 +468,7 @@ export default function Outputs(props) {
                             </TableCell>
                             <TableCell align="right">
                                 <Typography variant="h6">
-                                    <small id='binary-result'>{sign} | {comboField} | {expoCont} | {coefCount}</small>
+                                    <small id='binary-result'>{sign} |  {comboField} | {expoCont} | {coefCount}</small>
                                     {/* {normalizedExp > 369 || normalizedExp < -398 || !isValid ? <span>n/a</span> : <span>{sign} | {comboField} | {expoCont} | {coefCount}</span>} */}
                                     <IconButton onClick={copyBinary}>
                                         <ContentCopyIcon />
@@ -475,8 +486,8 @@ export default function Outputs(props) {
                             </TableCell>
                             <TableCell align="right">
                                 <Typography variant="h5">
-                                        <small>{hexResult}</small>
-                                    <IconButton>
+                                        <small id='hex-result'>{hexResult}</small>
+                                    <IconButton onClick={copyHex}>
                                         <ContentCopyIcon />
                                     </IconButton >
                                 </Typography>
