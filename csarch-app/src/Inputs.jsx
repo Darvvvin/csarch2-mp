@@ -46,12 +46,12 @@ export default function Inputs() {
             <Typography variant='h2'><b>The Only <span className='specialColor'>Decimal-64</span> <br />Converter You'll Ever Need.</b></Typography>
             <Box sx={{ display: 'flex', mb: 2, mt: 2 }}>
                 <FormControl required sx={{ minWidth: 150, mr: 1 }}>
-                    <InputLabel id="demo-simple-select-label">Type</InputLabel>
+                    <InputLabel id="demo-simple-select-label">Round off method</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         value={method}
-                        label="Type"
+                        label="Round off method"
                         onChange={handleChange}
                     >
                         <MenuItem value={'None'}>None</MenuItem>

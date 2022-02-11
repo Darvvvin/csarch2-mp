@@ -29,102 +29,19 @@ export default function Outputs(props) {
         if (origInputString.includes('.')) {
             //var origLen = 0;
             var tempRestore = 0;
-
             if (origInputString.length > 17) {
                 if(props.method === 'None') {
                     errorMessage = 'IS TOO LARGE!'
-                } else if(props.method === 'Truncate') {
-                    // origInputString = origInputString.substring(0, 17)
-
-                } else if(props.method === 'Inf') {
-                    // origLen = origInputString.length
-
-                    // origInputString = origInputString.substring(0, 17)
-                    // tempRestore = origInputString;
-
-                    // origInputString = parseFloat(origInputString) + (10 ** (-(origLen - 16)))
-
-                    // origInputString = origInputString.toString()
-                    
-                    // if(origInputString.length > 17) {
-                    //     origInputString = tempRestore
-                    // }
-                } else if(props.method === 'NegInf') {
-
-                } else if(props.method === 'Even') {
-
                 }
             }
         } else {
             if (origInputString.length > 16) {
                 if(props.method === 'None') {
                     errorMessage = 'IS TOO LARGE!'
-                } else if(props.method === 'Truncate') {
-                    origInputString = origInputString.substring(0, 16)
-
-                } else if(props.method === 'Inf') {
-                    origInputString = origInputString.substring(0, 16)
-                    tempRestore = origInputString;
-
-                    if(negativeDecimal) {
-                        origInputString = parseInt(origInputString) - 1
-                    } else {
-                        origInputString = parseInt(origInputString) + 1
-                    }
-
-                    origInputString = origInputString.toString()
-
-                    if(origInputString.length > 16) {
-                        origInputString = tempRestore
-                    }
-
-                } else if(props.method === 'NegInf') {
-                    origInputString = origInputString.substring(0, 16)
-                    tempRestore = origInputString;
-
-                    if(negativeDecimal) {
-                        origInputString = parseInt(origInputString) + 1
-                    } else {
-                        origInputString = parseInt(origInputString) - 1
-                    }
-
-                    origInputString = origInputString.toString()
-
-                    if(origInputString.length > 16) {
-                        origInputString = tempRestore
-                    }
-
-                } else if(props.method === 'Even') {
-                    if(parseInt(origInputString.charAt(16)) >= 5) { // +Inf
-                        origInputString = origInputString.substring(0, 16)
-                        tempRestore = origInputString;
-
-                        if(negativeDecimal) {
-                            origInputString = parseInt(origInputString) - 1
-                        } else {
-                            origInputString = parseInt(origInputString) + 1
-                        }
-                        origInputString = origInputString.toString()
-
-                        if(origInputString.length > 16) {
-                            origInputString = tempRestore
-                        }
-
-                    } else { // Truncate
-                        origInputString = origInputString.substring(0, 16)
-                    }
                 }
             }
         }
 
-        // if (origInputString.includes('.') && parseFloat(origInputString) % 1 === 0) {
-        //     for (let i = 0; i < origInputString.length; i++) {
-        //         if (origInputString.charAt(i) === '.') {
-        //             origInputString = origInputString.substring(0, i)
-        //             break
-        //         }
-        //     }
-        // }
         if (origInputString.includes('.')) {
             origInputString = parseFloat(origInputString);
             origInputString = origInputString.toString();
@@ -135,6 +52,80 @@ export default function Outputs(props) {
                 origInputString = origInputString.replace('.', '');
                 numberOfDecimals = origInputString.length - i;
                 i = origInputString.length
+            }
+        }
+
+        if(origInputString.length > 16) {
+            if(props.method === 'Truncate') {
+                console.log("trunc")
+                origInputString = origInputString.substring(0, 16)
+            } else if(props.method === 'Inf') {
+                console.log("inf")
+                origInputString = origInputString.substring(0, 16)
+                tempRestore = origInputString;
+    
+                if(negativeDecimal) {
+                    origInputString = parseInt(origInputString) - 1
+                } else {
+                    origInputString = parseInt(origInputString) + 1
+                }
+    
+                origInputString = origInputString.toString()
+    
+                if(origInputString.length > 16) {
+                    origInputString = tempRestore
+                }
+    
+            } else if(props.method === 'NegInf') {
+                console.log("neginf")
+                origInputString = origInputString.substring(0, 16)
+                tempRestore = origInputString;
+    
+                if(negativeDecimal) {
+                    origInputString = parseInt(origInputString) + 1
+                } else {
+                    origInputString = parseInt(origInputString) - 1
+                }
+    
+                origInputString = origInputString.toString()
+    
+                if(origInputString.length > 16) {
+                    origInputString = tempRestore
+                }
+    
+            } else if(props.method === 'Even') {
+                console.log("even")
+                if(parseInt(origInputString.charAt(16)) >= 5) { // +Inf
+                    origInputString = origInputString.substring(0, 16)
+                    tempRestore = origInputString;
+    
+                    if(negativeDecimal) {
+                        origInputString = parseInt(origInputString) - 1
+                    } else {
+                        origInputString = parseInt(origInputString) + 1
+                    }
+                    origInputString = origInputString.toString()
+    
+                    if(origInputString.length > 16) {
+                        origInputString = tempRestore
+                    }
+    
+                } else { // Truncate
+                    origInputString = origInputString.substring(0, 16)
+                    tempRestore = origInputString;
+        
+                    if(negativeDecimal) {
+                        origInputString = parseInt(origInputString) + 1
+                    } else {
+                        origInputString = parseInt(origInputString) - 1
+                    }
+        
+                    origInputString = origInputString.toString()
+        
+                    if(origInputString.length > 16) {
+                        origInputString = tempRestore
+                    }
+                }
             }
         }
 
@@ -460,7 +451,6 @@ export default function Outputs(props) {
 
     function IndivBinaryToHex(number) {
         let hexa = parseInt(number, 2).toString(16).toUpperCase();
-        // console.log(hexa)
         return hexa
     }
 
@@ -471,14 +461,6 @@ export default function Outputs(props) {
             return ''
         }
     }
-
-    // function IsNegativeExp(props) {
-    //     if (props.negativeSign) {
-    //         return '-'
-    //     } else {
-    //         return ''
-    //     }
-    // }
 
     function copyBinary() {
         var text_to_copy = binaryResultString;
@@ -536,7 +518,7 @@ export default function Outputs(props) {
 
             <Box>
                 <Typography variant='body1'>Normalized Input <b style={{ color: 'red' }}>{errorMessage}</b></Typography>
-                <Typography variant='h4' sx={{ mb: 2, mt: 0 }}><b><IsNegative negativeSign={negativeDecimal}/>{props.primary === '' ? <span>NaN </span> : <span>{origInputString}</span>}</b>x10<sup>{normalizedExp > 369 || normalizedExp < -398 ? <b style={{ color: '#04879c' }}>{normalizedExp}<span style={{fontSize: '10pt'}}>(Special case!)</span></b> : <b>{normalizedExp} </b>}</sup></Typography>
+                <Typography variant='h4' sx={{ mb: 2, mt: 0 }}><b><IsNegative negativeSign={negativeDecimal}/>{props.primary === '' ? <span>NaN </span> : <span>{origInputString}</span>}</b>x10<sup>{normalizedExp > 369 || normalizedExp < -398 ? <b style={{ color: '#04879c' }}>{normalizedExp}<span style={{fontSize: '10pt'}}>(Special case!)</span></b> : <b>{props.base === '' ? <span>NaN </span> : <span>{normalizedExp}</span>} </b>}</sup></Typography>
             </Box>
 
             <TableContainer component={Paper} sx={{ mt: 1 }}>
