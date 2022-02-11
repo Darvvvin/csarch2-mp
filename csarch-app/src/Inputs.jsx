@@ -84,7 +84,7 @@ export default function Inputs() {
             </Box>
             {/* <Button variant="contained" onClick={handleConvert} sx={{ minWidth: '100%', fontSize: '0.75em' }}><b>Convert</b></Button> */}
             <Outputs primary={primary} base={base} method={method}/>
-            <Typography variant='body2' sx={{mt: 2}}><u>Decimal-64 Converter by Buensalida & Darvin S13</u></Typography>
+            <Typography variant='body2' sx={{mt: 2}}><u>Decimal-64 Converter by Chua, Buensalida & Darvin S13</u></Typography>
         </Box>
     );
 }
