@@ -1,6 +1,6 @@
 To Run Locally,
 
-run npm i
+run npm i <br/>
 run npm start
 
 - Darvin 
