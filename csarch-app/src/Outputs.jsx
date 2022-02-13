@@ -422,7 +422,6 @@ export default function Outputs(props) {
                 }
             }
         }
-
         return finalArr;
     }
 
@@ -437,6 +436,13 @@ export default function Outputs(props) {
     binaryResultString = binaryResultString.replaceAll(',', '')
 
     var coefCount = dpCoefCont();
+
+    // Process coef count for display
+    coefCount.splice(10, 0, ' | ');
+    coefCount.splice(21, 0, ' | ');
+    coefCount.splice(32, 0, ' | ');
+    coefCount.splice(43, 0, ' | ');
+
     var hexResult = BinaryToHex()
 
     function BinaryToHex() {
