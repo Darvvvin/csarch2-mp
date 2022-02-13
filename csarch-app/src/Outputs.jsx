@@ -95,7 +95,7 @@ export default function Outputs(props) {
     
             } else if(props.method === 'Even') {
                 console.log("even")
-                if(parseInt(origInputString.charAt(16)) >= 5) { // +Inf
+                if(parseInt(origInputString.charAt(16)) >= 6) { // +Inf
                     origInputString = origInputString.substring(0, 16)
                     tempRestore = origInputString;
     
