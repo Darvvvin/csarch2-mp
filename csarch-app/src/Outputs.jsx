@@ -29,13 +29,13 @@ export default function Outputs(props) {
         if (origInputString.includes('.')) {
             //var origLen = 0;
             var tempRestore = 0;
-            if (origInputString.length > 4) {
+            if (origInputString.length > 3) {
                 if(props.method === 'None') {
                     errorMessage = 'IS TOO LARGE!'
                 }
             }
         } else {
-            if (origInputString.length > 3) {
+            if (origInputString.length > 2) {
                 if(props.method === 'None') {
                     errorMessage = 'IS TOO LARGE!'
                 }
@@ -55,13 +55,13 @@ export default function Outputs(props) {
             }
         }
 
-        if(origInputString.length > 3) {
+        if(origInputString.length > 2) {
             if(props.method === 'Truncate') {
                 console.log("trunc")
-                origInputString = origInputString.substring(0, 3)
+                origInputString = origInputString.substring(0, 2)
             } else if(props.method === 'Inf') {
                 console.log("inf")
-                origInputString = origInputString.substring(0, 3)
+                origInputString = origInputString.substring(0, 2)
                 tempRestore = origInputString;
     
                 if(negativeDecimal) {
@@ -72,13 +72,13 @@ export default function Outputs(props) {
     
                 origInputString = origInputString.toString()
     
-                if(origInputString.length > 3) {
+                if(origInputString.length > 2) {
                     origInputString = tempRestore
                 }
     
             } else if(props.method === 'NegInf') {
                 console.log("neginf")
-                origInputString = origInputString.substring(0, 3)
+                origInputString = origInputString.substring(0, 2)
                 tempRestore = origInputString;
     
                 if(negativeDecimal) {
@@ -89,14 +89,14 @@ export default function Outputs(props) {
     
                 origInputString = origInputString.toString()
     
-                if(origInputString.length > 3) {
+                if(origInputString.length > 2) {
                     origInputString = tempRestore
                 }
     
             } else if(props.method === 'Even') {
                 console.log("even")
-                if(parseInt(origInputString.charAt(2)) % 2 === 0 && parseInt(origInputString.charAt(3)) >= 5) { // +Inf
-                    origInputString = origInputString.substring(0, 16)
+                if(parseInt(origInputString.charAt(1)) % 2 === 0 && parseInt(origInputString.charAt(2)) >= 5) { // +Inf
+                    origInputString = origInputString.substring(0, 2)
                     tempRestore = origInputString;
     
                     if(negativeDecimal) {
@@ -106,20 +106,20 @@ export default function Outputs(props) {
                     }
                     origInputString = origInputString.toString()
     
-                    if(origInputString.length > 3) {
+                    if(origInputString.length > 2) {
                         origInputString = tempRestore
                     }
     
                 } else { // Truncate
                     console.log("trunc")
-                    origInputString = origInputString.substring(0, 3)
+                    origInputString = origInputString.substring(0, 2)
                 }
             }
         }
 
         let zeroString = ''
 
-        for (let i = 0; i < 3 - origInputString.length; i++) {
+        for (let i = 0; i < 2 - origInputString.length; i++) {
             zeroString += '0'
         }
 
