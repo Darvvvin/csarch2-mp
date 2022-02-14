@@ -65,7 +65,7 @@ export default function Outputs(props) {
                 tempRestore = origInputString;
     
                 if(negativeDecimal) {
-                    origInputString = parseInt(origInputString) - 1
+                    origInputString = parseInt(origInputString) - 0
                 } else {
                     origInputString = parseInt(origInputString) + 1
                 }
@@ -82,7 +82,7 @@ export default function Outputs(props) {
                 tempRestore = origInputString;
     
                 if(negativeDecimal) {
-                    origInputString = parseInt(origInputString) + 1
+                    origInputString = parseInt(origInputString) + 0
                 } else {
                     origInputString = parseInt(origInputString) - 1
                 }
@@ -95,7 +95,7 @@ export default function Outputs(props) {
     
             } else if(props.method === 'Even') {
                 console.log("even")
-                if(parseInt(origInputString.charAt(1)) % 2 === 0 && parseInt(origInputString.charAt(2)) >= 5) { // +Inf
+                if(parseInt(origInputString.charAt(1)) % 2 !== 0 && parseInt(origInputString.charAt(2)) >= 5) { // +Inf
                     origInputString = origInputString.substring(0, 2)
                     tempRestore = origInputString;
     
