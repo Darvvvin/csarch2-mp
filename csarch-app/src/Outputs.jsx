@@ -65,7 +65,7 @@ export default function Outputs(props) {
                 tempRestore = origInputString;
     
                 if(negativeDecimal) {
-                    origInputString = parseInt(origInputString) - 0
+                    origInputString = parseInt(origInputString) - 1
                 } else {
                     origInputString = parseInt(origInputString) + 1
                 }
@@ -82,7 +82,7 @@ export default function Outputs(props) {
                 tempRestore = origInputString;
     
                 if(negativeDecimal) {
-                    origInputString = parseInt(origInputString) + 0
+                    origInputString = parseInt(origInputString) + 1
                 } else {
                     origInputString = parseInt(origInputString) - 1
                 }
