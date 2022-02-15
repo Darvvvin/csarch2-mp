@@ -67,9 +67,7 @@ export default function Outputs(props) {
                 if(negativeDecimal) {
                     origInputString = parseInt(origInputString) - 0
                 } else {
-                    if(parseInt(origInputString.charAt(2))>=5) {
                     origInputString = parseInt(origInputString) + 1
-                    }
                 }
     
                 origInputString = origInputString.toString()
@@ -86,9 +84,7 @@ export default function Outputs(props) {
                 if(negativeDecimal) {
                     origInputString = parseInt(origInputString) + 0
                 } else {
-                    if(parseInt(origInputString.charAt(2))>=5) {
                     origInputString = parseInt(origInputString) - 1
-                    }
                 }
     
                 origInputString = origInputString.toString()
