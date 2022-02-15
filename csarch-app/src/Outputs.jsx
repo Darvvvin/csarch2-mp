@@ -119,7 +119,7 @@ export default function Outputs(props) {
 
         let zeroString = ''
 
-        for (let i = 0; i < 2 - origInputString.length; i++) {
+        for (let i = 0; i < 16 - origInputString.length; i++) {
             zeroString += '0'
         }
 
