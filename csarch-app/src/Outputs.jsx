@@ -134,7 +134,7 @@ export default function Outputs(props) {
         inputtedExp = temp
         
         if(parseInt(temp-numberOfDecimals)===0) {
-            normalizedExp = parseInt(temp - number of Decimals + 1).toString()
+            normalizedExp = parseInt(temp - numberOfDecimals + 1).toString()
         } else {
         normalizedExp = parseInt(temp - numberOfDecimals).toString()
         }
