@@ -132,7 +132,12 @@ export default function Outputs(props) {
             temp *= -1
         }
         inputtedExp = temp
+        
+        if(parseInt(temp-numberOfDecimals)===0) {
+            normalizedExp = parseInt(temp - number of Decimals + 1).toString()
+        } else {
         normalizedExp = parseInt(temp - numberOfDecimals).toString()
+        }
     }
 
     //let decimal = parseInt(origInputString)
