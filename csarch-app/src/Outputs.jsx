@@ -133,7 +133,7 @@ export default function Outputs(props) {
         }
         inputtedExp = temp
         
-        if(parseInt(temp-numberOfDecimals)===0) {
+        if(parseInt(temp-numberOfDecimals)===0 && (props.method === 'Inf' || props.method === 'NegInf' || props.method === 'Even')) {
             normalizedExp = parseInt(temp - numberOfDecimals + 1).toString()
         } else {
         normalizedExp = parseInt(temp - numberOfDecimals).toString()
