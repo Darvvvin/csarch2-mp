@@ -9,6 +9,7 @@ import Paper from '@mui/material/Paper';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { IconButton, Typography } from '@mui/material';
 import { Box } from '@mui/system';
+import fromExponential from 'from-exponential';
 
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -44,7 +45,8 @@ export default function Outputs(props) {
 
         if (origInputString.includes('.')) {
             origInputString = parseFloat(origInputString);
-            origInputString = origInputString.toString();
+            origInputString = fromExponential(origInputString); 
+            //console.log(origInputString)
         }
 
         for (let i = 0; i < origInputString.length; i++) {
@@ -150,8 +152,7 @@ export default function Outputs(props) {
         inputtedExp = temp
         normalizedExp = parseInt(temp - numberOfDecimals).toString()
     }
-
-    //let decimal = parseInt(origInputString)
+    
     let base = parseInt(props.base)
 
     const handleNegativeDecimal = (event) => {
