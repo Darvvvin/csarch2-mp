@@ -29,13 +29,13 @@ export default function Outputs(props) {
         if (origInputString.includes('.')) {
             //var origLen = 0;
             var tempRestore = 0;
-            if (origInputString.length > 3) {
+            if (origInputString.length > 17) {
                 if(props.method === 'None') {
                     errorMessage = 'IS TOO LARGE!'
                 }
             }
         } else {
-            if (origInputString.length > 2) {
+            if (origInputString.length > 16) {
                 if(props.method === 'None') {
                     errorMessage = 'IS TOO LARGE!'
                 }
