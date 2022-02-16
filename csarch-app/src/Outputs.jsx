@@ -30,13 +30,13 @@ export default function Outputs(props) {
             //var origLen = 0;
             var tempRestore = 0;
             if (origInputString.length > 17) {
-                if(props.method === 'None') {
+                if (props.method === 'None') {
                     errorMessage = 'IS TOO LARGE!'
                 }
             }
         } else {
             if (origInputString.length > 16) {
-                if(props.method === 'None') {
+                if (props.method === 'None') {
                     errorMessage = 'IS TOO LARGE!'
                 }
             }
@@ -55,64 +55,63 @@ export default function Outputs(props) {
             }
         }
 
-        if(origInputString.length > 2) {
-            if(props.method === 'Truncate') {
+        if (origInputString.length > 16) {
+            if (props.method === 'Truncate') {
                 console.log("trunc")
-                origInputString = origInputString.substring(0, 2)
-            } else if(props.method === 'Inf') {
+                origInputString = origInputString.substring(0, 16)
+            } else if (props.method === 'Inf') {
                 console.log("inf")
-                origInputString = origInputString.substring(0, 2)
+                origInputString = origInputString.substring(0, 16)
                 tempRestore = origInputString;
-    
-                if(negativeDecimal) {
-                    origInputString = parseInt(origInputString) - 0
+
+                if (negativeDecimal) {
+                    origInputString = parseInt(origInputString) - 1
                 } else {
                     origInputString = parseInt(origInputString) + 1
                 }
-    
+
                 origInputString = origInputString.toString()
-    
-                if(origInputString.length > 2) {
+
+                if (origInputString.length > 16) {
                     origInputString = tempRestore
                 }
-    
-            } else if(props.method === 'NegInf') {
+
+            } else if (props.method === 'NegInf') {
                 console.log("neginf")
-                origInputString = origInputString.substring(0, 2)
+                origInputString = origInputString.substring(0, 16)
                 tempRestore = origInputString;
-    
-                if(negativeDecimal) {
+
+                if (negativeDecimal) {
                     origInputString = parseInt(origInputString) + 1
                 } else {
-                    origInputString = parseInt(origInputString) - 0
+                    origInputString = parseInt(origInputString) - 1
                 }
-    
+
                 origInputString = origInputString.toString()
-    
-                if(origInputString.length > 2) {
+
+                if (origInputString.length > 2) {
                     origInputString = tempRestore
                 }
-    
-            } else if(props.method === 'Even') {
+
+            } else if (props.method === 'Even') {
                 console.log("even")
-                if(parseInt(origInputString.charAt(1)) % 2 !== 0 && parseInt(origInputString.charAt(2)) >= 5) { // +Inf
-                    origInputString = origInputString.substring(0, 2)
+                if (parseInt(origInputString.charAt(15)) % 2 !== 0 && parseInt(origInputString.charAt(16)) >= 5) { // +Inf
+                    origInputString = origInputString.substring(0, 16)
                     tempRestore = origInputString;
-    
-                    if(negativeDecimal) {
+
+                    if (negativeDecimal) {
                         origInputString = parseInt(origInputString) - 1
                     } else {
                         origInputString = parseInt(origInputString) + 1
                     }
                     origInputString = origInputString.toString()
-    
-                    if(origInputString.length > 2) {
+
+                    if (origInputString.length > 16) {
                         origInputString = tempRestore
                     }
-    
+
                 } else { // Truncate
-                    console.log("trunc")
-                    origInputString = origInputString.substring(0, 2)
+                    origInputString = origInputString.substring(0, 16)
                 }
             }
         }
@@ -132,12 +131,7 @@ export default function Outputs(props) {
             temp *= -1
         }
         inputtedExp = temp
-        
-        if(parseInt(temp-numberOfDecimals)===0 && (props.method === 'Inf' || props.method === 'NegInf' || props.method === 'Even' || props.method === 'Truncate')) {
-            normalizedExp = parseInt(temp - numberOfDecimals + 1).toString()
-        } else {
         normalizedExp = parseInt(temp - numberOfDecimals).toString()
-        }
     }
 
     //let decimal = parseInt(origInputString)
@@ -208,12 +202,12 @@ export default function Outputs(props) {
     var msdBinary = decToBinary(msd);
 
     // 3) Get Combination Field
-    var comboField = [0,0,0,0,0];
+    var comboField = [0, 0, 0, 0, 0];
 
     if (props.primary === '') {
-        comboField = [1,1,1,1,1];
-    } else if(normalizedExp > 369 || normalizedExp < -398) {
-        comboField = [1,1,1,1,0];
+        comboField = [1, 1, 1, 1, 1];
+    } else if (normalizedExp > 369 || normalizedExp < -398) {
+        comboField = [1, 1, 1, 1, 0];
         //console.log(comboField)
     } else {
         if (parseInt(msd) <= 7) {
@@ -441,12 +435,12 @@ export default function Outputs(props) {
 
     hexResult.splice(4, 0, ' | ');
     hexResult.splice(9, 0, ' | ');
-    hexResult.splice(14, 0, ' | ');    
+    hexResult.splice(14, 0, ' | ');
 
     function BinaryToHex() {
         let hexResult = []
-        for(let i = 0; i < 64; i += 4) {
-            let hexDigit = binaryResultString.substring(i, i+4)
+        for (let i = 0; i < 64; i += 4) {
+            let hexDigit = binaryResultString.substring(i, i + 4)
             let hexa = IndivBinaryToHex(hexDigit)
             hexResult.push(hexa)
         }
@@ -523,7 +517,7 @@ export default function Outputs(props) {
 
             <Box>
                 <Typography variant='body1'>Normalized Input <b style={{ color: 'red' }}>{errorMessage}</b></Typography>
-                <Typography variant='h4' sx={{ mb: 2, mt: 0 }}><b><IsNegative negativeSign={negativeDecimal}/>{props.primary === '' ? <span>NaN </span> : <span>{origInputString}</span>}</b>x10<sup>{normalizedExp > 369 || normalizedExp < -398 ? <b style={{ color: '#04879c' }}>{normalizedExp}<span style={{fontSize: '10pt'}}>(Special case!)</span></b> : <b>{props.base === '' ? <span>NaN </span> : <span>{normalizedExp}</span>} </b>}</sup></Typography>
+                <Typography variant='h4' sx={{ mb: 2, mt: 0 }}><b><IsNegative negativeSign={negativeDecimal} />{props.primary === '' ? <span>NaN </span> : <span>{origInputString}</span>}</b>x10<sup>{normalizedExp > 369 || normalizedExp < -398 ? <b style={{ color: '#04879c' }}>{normalizedExp}<span style={{ fontSize: '10pt' }}>(Special case!)</span></b> : <b>{props.base === '' ? <span>NaN </span> : <span>{normalizedExp}</span>} </b>}</sup></Typography>
             </Box>
 
             <TableContainer component={Paper} sx={{ mt: 1 }}>
@@ -561,7 +555,7 @@ export default function Outputs(props) {
                             </TableCell>
                             <TableCell align="right">
                                 <Typography variant="h5">
-                                        <small id='hex-result'>{hexResult}</small>
+                                    <small id='hex-result'>{hexResult}</small>
                                     <IconButton onClick={copyHex}>
                                         <ContentCopyIcon />
                                     </IconButton >
