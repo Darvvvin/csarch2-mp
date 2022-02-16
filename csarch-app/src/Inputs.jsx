@@ -38,7 +38,7 @@ export default function Inputs() {
         <Box
             component="form"
             sx={{
-                width: '70ch'
+                width: '50'
             }}
             noValidate
             autoComplete="off"
