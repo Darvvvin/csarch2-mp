@@ -55,48 +55,48 @@ export default function Outputs(props) {
             }
         }
 
-        if(origInputString.length > 16) {
+        if(origInputString.length > 2) {
             if(props.method === 'Truncate') {
                 console.log("trunc")
-                origInputString = origInputString.substring(0, 16)
+                origInputString = origInputString.substring(0, 2)
             } else if(props.method === 'Inf') {
                 console.log("inf")
-                origInputString = origInputString.substring(0, 16)
+                origInputString = origInputString.substring(0, 2)
                 tempRestore = origInputString;
     
                 if(negativeDecimal) {
-                    origInputString = parseInt(origInputString) - 1
+                    origInputString = parseInt(origInputString) - 0
                 } else {
                     origInputString = parseInt(origInputString) + 1
                 }
     
                 origInputString = origInputString.toString()
     
-                if(origInputString.length > 16) {
+                if(origInputString.length > 2) {
                     origInputString = tempRestore
                 }
     
             } else if(props.method === 'NegInf') {
                 console.log("neginf")
-                origInputString = origInputString.substring(0, 16)
+                origInputString = origInputString.substring(0, 2)
                 tempRestore = origInputString;
     
                 if(negativeDecimal) {
                     origInputString = parseInt(origInputString) + 1
                 } else {
-                    origInputString = parseInt(origInputString) - 1
+                    origInputString = parseInt(origInputString) - 0
                 }
     
                 origInputString = origInputString.toString()
     
-                if(origInputString.length > 16) {
+                if(origInputString.length > 2) {
                     origInputString = tempRestore
                 }
     
             } else if(props.method === 'Even') {
                 console.log("even")
-                if(parseInt(origInputString.charAt(16)) >= 5) {  // +Inf
-                    origInputString = origInputString.substring(0, 16)
+                if(parseInt(origInputString.charAt(1)) % 2 !== 0 && parseInt(origInputString.charAt(2)) >= 5) { // +Inf
+                    origInputString = origInputString.substring(0, 2)
                     tempRestore = origInputString;
     
                     if(negativeDecimal) {
@@ -106,25 +106,13 @@ export default function Outputs(props) {
                     }
                     origInputString = origInputString.toString()
     
-                    if(origInputString.length > 16) {
+                    if(origInputString.length > 2) {
                         origInputString = tempRestore
                     }
     
                 } else { // Truncate
-                    origInputString = origInputString.substring(0, 16)
-                    tempRestore = origInputString;
-        
-                    if(negativeDecimal) {
-                        origInputString = parseInt(origInputString) + 1
-                    } else {
-                        origInputString = parseInt(origInputString) - 1
-                    }
-        
-                    origInputString = origInputString.toString()
-        
-                    if(origInputString.length > 16) {
-                        origInputString = tempRestore
-                    }
+                    console.log("trunc")
+                    origInputString = origInputString.substring(0, 2)
                 }
             }
         }
@@ -144,7 +132,12 @@ export default function Outputs(props) {
             temp *= -1
         }
         inputtedExp = temp
+        
+        if(parseInt(temp-numberOfDecimals)===0 && (props.method === 'Inf' || props.method === 'NegInf' || props.method === 'Even' || props.method === 'Truncate')) {
+            normalizedExp = parseInt(temp - numberOfDecimals + 1).toString()
+        } else {
         normalizedExp = parseInt(temp - numberOfDecimals).toString()
+        }
     }
 
     //let decimal = parseInt(origInputString)
