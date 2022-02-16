@@ -437,13 +437,18 @@ export default function Outputs(props) {
     coefCount.splice(43, 0, ' | ');
 
     var hexResult = BinaryToHex()
+    var hexToCopy = hexResult.toString()
+
+    hexResult.splice(4, 0, ' | ');
+    hexResult.splice(9, 0, ' | ');
+    hexResult.splice(14, 0, ' | ');    
 
     function BinaryToHex() {
-        let hexResult = ''
+        let hexResult = []
         for(let i = 0; i < 64; i += 4) {
             let hexDigit = binaryResultString.substring(i, i+4)
             let hexa = IndivBinaryToHex(hexDigit)
-            hexResult += hexa
+            hexResult.push(hexa)
         }
         return hexResult
     }
@@ -484,7 +489,8 @@ export default function Outputs(props) {
     }
 
     function copyHex() {
-        var text_to_copy = hexResult;
+        var text_to_copy = hexToCopy;
+        text_to_copy = text_to_copy.replaceAll(",", "")
 
         if (!navigator.clipboard) {
             var copyText = document.getElementById("hex-result");
