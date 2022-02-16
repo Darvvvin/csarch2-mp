@@ -95,7 +95,7 @@ export default function Outputs(props) {
 
             } else if (props.method === 'Even') {
                 console.log("even")
-                if (parseInt(origInputString.charAt(15)) % 2 !== 0 && parseInt(origInputString.charAt(16)) >= 5) { // +Inf
+                if (parseInt(origInputString.charAt(16)) > 5) { // if 17th digit is greater than 5
                     origInputString = origInputString.substring(0, 16)
                     tempRestore = origInputString;
 
@@ -109,8 +109,25 @@ export default function Outputs(props) {
                     if (origInputString.length > 16) {
                         origInputString = tempRestore
                     }
+                } else if (parseInt(origInputString.charAt(16)) === 5) {
+                    if (parseInt(origInputString.charAt(15)) % 2 !== 0) { // If ODD
+                        origInputString = origInputString.substring(0, 16)
+                        tempRestore = origInputString;
 
-                } else { // Truncate
+                        if (negativeDecimal) {
+                            origInputString = parseInt(origInputString) - 1
+                        } else {
+                            origInputString = parseInt(origInputString) + 1
+                        }
+                        origInputString = origInputString.toString()
+
+                        if (origInputString.length > 16) {
+                            origInputString = tempRestore
+                        }
+                    } else {
+                        origInputString = origInputString.substring(0, 16)
+                    }
+                } else {
                     origInputString = origInputString.substring(0, 16)
                 }
             }
